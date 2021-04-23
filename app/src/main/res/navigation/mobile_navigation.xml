@@ -22,9 +22,4 @@
         android:name="com.faa.knowyourgame_new.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.faa.knowyourgame_new.ui.login.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
 </navigation>
