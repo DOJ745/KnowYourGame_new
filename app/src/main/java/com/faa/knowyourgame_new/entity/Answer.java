@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity(tableName = "Answers")
-public class Answers {
+public class Answer {
 
     @PrimaryKey(autoGenerate = true)
     int ID;
