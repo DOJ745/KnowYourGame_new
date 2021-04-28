@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(navView, navController);
 
-        showDialog();
+        showLoginDialog();
 
 
         /*binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
@@ -81,26 +81,12 @@ public class MainActivity extends AppCompatActivity {
 
     public static boolean hasConnection(final Context context)
     {
-        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (wifiInfo != null && wifiInfo.isConnected())
-        {
-            return true;
-        }
-        wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        if (wifiInfo != null && wifiInfo.isConnected())
-        {
-            return true;
-        }
-        wifiInfo = cm.getActiveNetworkInfo();
-        if (wifiInfo != null && wifiInfo.isConnected())
-        {
-            return true;
-        }
-        return false;
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
-    private void showDialog() {
+    private void showLoginDialog() {
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setCancelable(false);
@@ -118,13 +104,15 @@ public class MainActivity extends AppCompatActivity {
 
             if(hasConnection(this)) {
                 Toast.makeText(this, "sign in", Toast.LENGTH_SHORT).show();
+                dialog.setCancelable(true);
             }
             else
                 Toast.makeText(this, "no internet connection", Toast.LENGTH_SHORT).show();
         });
         sign_up.setOnClickListener( listener_up -> {
             if(hasConnection(this)) {
-                Toast.makeText(this, "sign un", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "sign up", Toast.LENGTH_SHORT).show();
+                dialog.setCancelable(true);
             }
             else
                 Toast.makeText(this, "no internet connection", Toast.LENGTH_SHORT).show();
