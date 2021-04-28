@@ -37,64 +37,6 @@ public class MainActivity extends AppCompatActivity {
     //private ActivityMainBinding binding;
     //private ImageView imageView;
 
-    public void showDialog() {
-
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setCancelable(false);
-
-        View view = getLayoutInflater().inflate(R.layout.login_dialog, null);
-        dialog.setView(view);
-
-        EditText entered_login = view.findViewById(R.id.editLogin);
-        EditText entered_password = view.findViewById(R.id.editPassword);
-
-        Button sign_in = view.findViewById(R.id.button_sign_in);
-        Button sign_up = view.findViewById(R.id.button_sign_up);
-
-        sign_in.setOnClickListener( listener_in ->
-                Toast.makeText(this, "sign in", Toast.LENGTH_SHORT).show());
-        sign_up.setOnClickListener( listener_up ->
-                Toast.makeText(this, "sign up", Toast.LENGTH_SHORT).show());
-
-        entered_login.setError("Required field!");
-        entered_login.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (entered_login.getText().length() != 0) {
-                    entered_login.setError(null);
-                }
-                else {
-                    entered_login.setError("Required!");
-                }
-            }
-        });
-
-        entered_password.setError("Required field! (> 5 symbols!)");
-        entered_password.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (entered_password.getText().length() != 0 && entered_password.getText().length() > 5) {
-                    entered_password.setError(null);
-                }
-                else {
-                    entered_password.setError("Required!");
-                }
-            }
-        });
-
-        dialog.show();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,35 +79,6 @@ public class MainActivity extends AppCompatActivity {
         //registerUser();
     }
 
-    /*
-    @Override
-    public void onClick(View view){
-        try {
-            if(view.getId() == R.id.button_sign_in) {
-                Toast.makeText(this, "sign in", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(this, "sign un", Toast.LENGTH_SHORT).show();
-            }
-
-            if (view.getId() == R.id.button_sign_in) {
-                if(editEmail.getText().toString().equals("adminemail@gmail.com") &&
-                        editPassword.getText().toString().equals("admin12345"))
-                {
-                    Intent intent = new Intent(this, DbOptionSelectActivity.class);
-                    startActivity(intent);
-                }
-                else { signIn(editEmail.getText().toString(), editPassword.getText().toString()); }
-            }
-            else if (view.getId() == R.id.button_reg) {
-                createAccount(editEmail.getText().toString(), editPassword.getText().toString());
-            }
-        }
-        catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }*/
-
     public static boolean hasConnection(final Context context)
     {
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -185,6 +98,75 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    private void showDialog() {
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setCancelable(false);
+
+        View view = getLayoutInflater().inflate(R.layout.login_dialog, null);
+        dialog.setView(view);
+
+        EditText entered_login = view.findViewById(R.id.editLogin);
+        EditText entered_password = view.findViewById(R.id.editPassword);
+
+        Button sign_in = view.findViewById(R.id.button_sign_in);
+        Button sign_up = view.findViewById(R.id.button_sign_up);
+
+        sign_in.setOnClickListener( listener_in -> {
+
+            if(hasConnection(this)) {
+                Toast.makeText(this, "sign in", Toast.LENGTH_SHORT).show();
+            }
+            else
+                Toast.makeText(this, "no internet connection", Toast.LENGTH_SHORT).show();
+        });
+        sign_up.setOnClickListener( listener_up -> {
+            if(hasConnection(this)) {
+                Toast.makeText(this, "sign un", Toast.LENGTH_SHORT).show();
+            }
+            else
+                Toast.makeText(this, "no internet connection", Toast.LENGTH_SHORT).show();
+        });
+
+        entered_login.setError("Required field!");
+        entered_login.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (entered_login.getText().length() != 0) {
+                    entered_login.setError(null);
+                }
+                else {
+                    entered_login.setError("Required!");
+                }
+            }
+        });
+
+        entered_password.setError("Required field! (> 5 symbols!)");
+        entered_password.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (entered_password.getText().length() != 0 && entered_password.getText().length() > 5) {
+                    entered_password.setError(null);
+                }
+                else {
+                    entered_password.setError("Required!");
+                }
+            }
+        });
+
+        dialog.show();
     }
 
     public void signIn() {
