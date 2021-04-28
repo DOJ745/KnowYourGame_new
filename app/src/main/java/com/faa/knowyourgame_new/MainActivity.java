@@ -104,11 +104,11 @@ public class MainActivity extends AppCompatActivity {
 
             if(hasConnection(this)) {
                 Toast.makeText(this, "sign in", Toast.LENGTH_SHORT).show();
-                dialog.setCancelable(true);
             }
             else
                 Toast.makeText(this, "no internet connection", Toast.LENGTH_SHORT).show();
         });
+
         sign_up.setOnClickListener( listener_up -> {
             if(hasConnection(this)) {
                 Toast.makeText(this, "sign up", Toast.LENGTH_SHORT).show();
