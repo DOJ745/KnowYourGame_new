@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         View view = getLayoutInflater().inflate(R.layout.login_dialog, null);
         dialog.setView(view);
 
+
         EditText entered_login = view.findViewById(R.id.editLogin);
         EditText entered_password = view.findViewById(R.id.editPassword);
 

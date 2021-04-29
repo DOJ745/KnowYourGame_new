@@ -65,6 +65,9 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
+    // Constraint Layout
+    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+
     // Android Dara Binding
     configurations.all {
         resolutionStrategy.force "org.antlr:antlr4-runtime:4.5.3"
