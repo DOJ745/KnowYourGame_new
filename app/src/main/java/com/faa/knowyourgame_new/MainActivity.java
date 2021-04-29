@@ -1,27 +1,17 @@
 package com.faa.knowyourgame_new;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.app.Notification;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.faa.knowyourgame_new.dto.UserDto;
 import com.faa.knowyourgame_new.retrofit.ServerService;
 import com.faa.knowyourgame_new.retrofit.utils.ApiUtils;
-import com.faa.knowyourgame_new.ui.login_dialog.TestLogin;
+import com.faa.knowyourgame_new.ui.login_dialog.LoginDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.navigation.NavController;
@@ -35,8 +25,8 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ServerService myService;
-    private DialogFragment loginDialogFragment= new TestLogin();
+    public static ServerService myService = ApiUtils.getServerService();;
+    private DialogFragment loginDialogFragment = new LoginDialogFragment();
     private static final String TAG = "MainActivity";
 
     //private User test_user = new User();
@@ -48,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myService = ApiUtils.getServerService();
+        //myService = ApiUtils.getServerService();
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
         // Passing each menu ID as a set of Ids because each
@@ -68,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(navView, navController);
 
-        loginDialogFragment.show(getSupportFragmentManager(), "TEST_DIALOG");
+        loginDialogFragment.show(getSupportFragmentManager(), "LOGIN_DIALOG");
 
 
         /*binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
@@ -93,11 +83,11 @@ public class MainActivity extends AppCompatActivity {
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
-    public void signIn() {
+    public static void signIn() {
 
     }
 
-    public void signUp() {
+    public static void signUp() {
         myService.postNewUser("login", "password").enqueue(new Callback<UserDto>() {
             @Override
             public void onResponse(Call<UserDto> call, Response<UserDto> response) {

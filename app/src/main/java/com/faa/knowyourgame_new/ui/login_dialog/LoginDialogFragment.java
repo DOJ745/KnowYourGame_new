@@ -1,7 +1,6 @@
 package com.faa.knowyourgame_new.ui.login_dialog;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,7 +17,7 @@ import com.faa.knowyourgame_new.R;
 
 import static com.faa.knowyourgame_new.MainActivity.hasConnection;
 
-public class TestLogin extends DialogFragment implements DialogInterface.OnClickListener {
+public class LoginDialogFragment extends DialogFragment implements DialogInterface.OnClickListener {
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -39,20 +38,28 @@ public class TestLogin extends DialogFragment implements DialogInterface.OnClick
 
         sign_in.setOnClickListener(listener_in -> {
             if(hasConnection(getActivity())) {
-                Toast.makeText(getActivity(), "sign in", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),
+                        sign_in.getText().toString(),
+                        Toast.LENGTH_SHORT).show();
                 loginDialog.cancel();
             }
             else
-                Toast.makeText(getActivity(), "no internet connection", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),
+                        "No internet connection!",
+                        Toast.LENGTH_SHORT).show();
         });
 
         sign_up.setOnClickListener(listener_up -> {
             if(hasConnection(getActivity())) {
-                Toast.makeText(getActivity(), "sign up", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),
+                        sign_up.getText().toString(),
+                        Toast.LENGTH_SHORT).show();
                 loginDialog.cancel();
             }
             else
-                Toast.makeText(getActivity(), "no internet connection", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),
+                        "No internet connection!",
+                        Toast.LENGTH_SHORT).show();
         });
 
         entered_login.setError("Required field! (> 3 symbols!)");
