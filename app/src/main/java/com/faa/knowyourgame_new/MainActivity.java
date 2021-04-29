@@ -1,5 +1,8 @@
 package com.faa.knowyourgame_new;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.Notification;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 import com.faa.knowyourgame_new.dto.UserDto;
 import com.faa.knowyourgame_new.retrofit.ServerService;
 import com.faa.knowyourgame_new.retrofit.utils.ApiUtils;
+import com.faa.knowyourgame_new.ui.login_dialog.TestLogin;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -31,6 +35,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private ServerService myService;
+    //private Activity forDialog = new Activity();
     private static final String TAG = "MainActivity";
 
     //private User test_user = new User();
@@ -55,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().
                 findFragmentById(R.id.nav_host_fragment);
 
+        assert navHostFragment != null;
         NavController navController = navHostFragment.getNavController();
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -88,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void showLoginDialog() {
 
+        //TestLogin loginDialog = new TestLogin();
+        //loginDialog.createDialog(this, ).show();
+        /*
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setCancelable(false);
 
@@ -101,10 +110,13 @@ public class MainActivity extends AppCompatActivity {
         Button sign_in = view.findViewById(R.id.button_sign_in);
         Button sign_up = view.findViewById(R.id.button_sign_up);
 
+        Dialog loginDialog = dialog.create();
+
         sign_in.setOnClickListener( listener_in -> {
 
             if(hasConnection(this)) {
                 Toast.makeText(this, "sign in", Toast.LENGTH_SHORT).show();
+                loginDialog.cancel();
             }
             else
                 Toast.makeText(this, "no internet connection", Toast.LENGTH_SHORT).show();
@@ -113,13 +125,13 @@ public class MainActivity extends AppCompatActivity {
         sign_up.setOnClickListener( listener_up -> {
             if(hasConnection(this)) {
                 Toast.makeText(this, "sign up", Toast.LENGTH_SHORT).show();
-                dialog.setCancelable(true);
+                loginDialog.cancel();
             }
             else
                 Toast.makeText(this, "no internet connection", Toast.LENGTH_SHORT).show();
         });
 
-        entered_login.setError("Required field!");
+        entered_login.setError("Required field! (> 3 symbols!)");
         entered_login.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -128,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
             @Override
             public void afterTextChanged(Editable editable) {
-                if (entered_login.getText().length() != 0) {
+                if (entered_login.getText().length() != 0 && entered_login.getText().length() > 3) {
                     entered_login.setError(null);
                 }
                 else {
@@ -154,8 +166,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        dialog.show();
+        loginDialog.show();*/
     }
 
     public void signIn() {
