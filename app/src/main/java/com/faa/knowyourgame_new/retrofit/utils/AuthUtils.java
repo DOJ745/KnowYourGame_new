@@ -2,6 +2,7 @@ package com.faa.knowyourgame_new.retrofit.utils;
 
 import android.util.Log;
 
+import com.faa.knowyourgame_new.dto.LogoutDto;
 import com.faa.knowyourgame_new.dto.RegisterDto;
 import com.faa.knowyourgame_new.dto.UserDto;
 
@@ -20,7 +21,27 @@ public class AuthUtils {
     }
 
     public interface LoginCallBack<T>{
-        void login(String signInResponse);
+        void login(UserDto signInResponse);
+    }
+
+    public interface LogoutCallBack<T>{
+        void logout(String logoutResponse);
+    }
+
+    public static void logOut(LogoutCallBack logoutCallBack){
+        myService.logout().enqueue(new Callback<LogoutDto>() {
+
+            @Override
+            public void onResponse(Call<LogoutDto> call, Response<LogoutDto> response) {
+                Log.d(TAG, "Logout user status: " + response.body());
+                logoutCallBack.logout(String.valueOf(response.body().getLogoutStatus()));
+            }
+
+            @Override
+            public void onFailure(Call<LogoutDto> call, Throwable t) {
+                Log.e(TAG, "Error loading from API");
+            }
+        });
     }
 
     public static void signIn(String login,
@@ -33,12 +54,9 @@ public class AuthUtils {
 
                 if(response.isSuccessful()) {
                     Log.d(TAG, "Sign in user: " + response.body());
-
-                    loginCallBack.login(response.body().toString());
+                    loginCallBack.login(response.body());
                 }
-                else {
-                    Log.d(TAG, "Sign in status(code): " + response.code());
-                }
+                else { Log.d(TAG, "Sign in status(code): " + response.code()); }
             }
 
             @Override
@@ -58,12 +76,9 @@ public class AuthUtils {
 
                 if(response.isSuccessful()) {
                     Log.d(TAG, "Sign up status: " + response.body().getStatus());
-
                     registrationCallBack.register(response.body().getStatus());
                 }
-                else {
-                    Log.d(TAG, "Sign up status(code): " + response.code());
-                }
+                else { Log.d(TAG, "Sign up status(code): " + response.code()); }
             }
 
             @Override

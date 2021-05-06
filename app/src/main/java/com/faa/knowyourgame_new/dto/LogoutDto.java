@@ -3,10 +3,11 @@ package com.faa.knowyourgame_new.dto;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class RegisterDto {
-    @SerializedName("status") @Expose
-    private String status;
+public class LogoutDto implements Serializable {
+    @SerializedName("logout") @Expose
+    private int logoutStatus;
 }

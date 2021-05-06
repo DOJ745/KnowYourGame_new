@@ -1,5 +1,6 @@
 package com.faa.knowyourgame_new.retrofit;
 
+import com.faa.knowyourgame_new.dto.LogoutDto;
 import com.faa.knowyourgame_new.dto.RegisterDto;
 import com.faa.knowyourgame_new.dto.UserDto;
 
@@ -15,6 +16,9 @@ public interface ServerService {
 
     @POST("/sign_in")
     Call<UserDto> signIn(@Query("login") String login, @Query("password") String password);
+
+    @POST("/log_out")
+    Call<LogoutDto> logout();
 
     @GET("/test_request")
     Call<UserDto> getCheckUser();

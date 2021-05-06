@@ -10,9 +10,9 @@ import lombok.Data;
 @Data
 public class UserDto implements Serializable {
     @SerializedName("login") @Expose
-    public String login;
+    private String login;
     @SerializedName("password") @Expose
-    public String password;
+    private String password;
     @SerializedName("score") @Expose
-    public double score;
+    private double score;
 }
