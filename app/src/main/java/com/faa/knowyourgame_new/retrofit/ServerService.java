@@ -13,7 +13,7 @@ public interface ServerService {
     @POST("/sign_up")
     Call<RegisterDto> signUp(@Query("login") String login, @Query("password") String password);
 
-    @GET("/sign_in")
+    @POST("/sign_in")
     Call<UserDto> signIn(@Query("login") String login, @Query("password") String password);
 
     @GET("/test_request")
