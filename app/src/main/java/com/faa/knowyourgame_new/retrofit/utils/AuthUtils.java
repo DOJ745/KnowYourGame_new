@@ -6,6 +6,8 @@ import com.faa.knowyourgame_new.dto.LogoutDto;
 import com.faa.knowyourgame_new.dto.RegisterDto;
 import com.faa.knowyourgame_new.dto.UserDto;
 
+import org.jetbrains.annotations.NotNull;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,7 +16,7 @@ import static com.faa.knowyourgame_new.retrofit.RetrofitClient.myService;
 
 public class AuthUtils {
 
-    private static String TAG = "AuthUtils";
+    private static final String TAG = "AuthUtils";
 
     public interface RegistrationCallBack<T>{
         void register(String signUpResponse);
@@ -32,13 +34,17 @@ public class AuthUtils {
         myService.logout().enqueue(new Callback<LogoutDto>() {
 
             @Override
-            public void onResponse(Call<LogoutDto> call, Response<LogoutDto> response) {
+            public void onResponse(
+                    @NotNull Call<LogoutDto> call,
+                    @NotNull Response<LogoutDto> response) {
                 Log.d(TAG, "Logout user status: " + response.body());
                 logoutCallBack.logout(String.valueOf(response.body().getLogoutStatus()));
             }
 
             @Override
-            public void onFailure(Call<LogoutDto> call, Throwable t) {
+            public void onFailure(
+                    @NotNull Call<LogoutDto> call,
+                    @NotNull Throwable t) {
                 Log.e(TAG, "Error loading from API");
             }
         });
@@ -50,7 +56,9 @@ public class AuthUtils {
 
         myService.signIn(login, password).enqueue(new Callback<UserDto>() {
             @Override
-            public void onResponse(Call<UserDto> call, Response<UserDto> response) {
+            public void onResponse(
+                    @NotNull Call<UserDto> call,
+                    @NotNull Response<UserDto> response) {
 
                 if(response.isSuccessful()) {
                     Log.d(TAG, "Sign in user: " + response.body());
@@ -72,7 +80,9 @@ public class AuthUtils {
 
         myService.signUp(login, password).enqueue(new Callback<RegisterDto>() {
             @Override
-            public void onResponse(Call<RegisterDto> call, Response<RegisterDto> response) {
+            public void onResponse(
+                    @NotNull Call<RegisterDto> call,
+                    @NotNull Response<RegisterDto> response) {
 
                 if(response.isSuccessful()) {
                     Log.d(TAG, "Sign up status: " + response.body().getStatus());
@@ -82,7 +92,9 @@ public class AuthUtils {
             }
 
             @Override
-            public void onFailure(Call<RegisterDto> call, Throwable t) {
+            public void onFailure(
+                    @NotNull Call<RegisterDto> call,
+                    @NotNull Throwable t) {
                 Log.e(TAG, "Error loading from API");
             }
         });
