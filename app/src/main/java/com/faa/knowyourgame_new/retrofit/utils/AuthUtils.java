@@ -34,7 +34,7 @@ public class AuthUtils {
                 if(response.isSuccessful()) {
                     Log.d(TAG, "Sign in user: " + response.body());
 
-                    loginCallBack.login(response.body().getLogin());
+                    loginCallBack.login(response.body().toString());
                 }
                 else {
                     Log.d(TAG, "Sign in status(code): " + response.code());
