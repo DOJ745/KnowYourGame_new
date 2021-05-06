@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.faa.knowyourgame_new.R;
+import com.faa.knowyourgame_new.retrofit.utils.AuthUtils;
 
 import static com.faa.knowyourgame_new.MainActivity.hasConnection;
 
@@ -37,10 +38,16 @@ public class LoginDialogFragment extends DialogFragment implements DialogInterfa
         Dialog loginDialog = dialog.create();
 
         sign_in.setOnClickListener(listener_in -> {
+
             if(hasConnection(getActivity())) {
-                Toast.makeText(getActivity(),
-                        sign_in.getText().toString(),
-                        Toast.LENGTH_SHORT).show();
+
+                AuthUtils.signIn(
+                        entered_login.getText().toString(),
+                        entered_password.getText().toString(),
+                        (response) ->
+                                Toast.makeText(getActivity(),
+                                        response,
+                                        Toast.LENGTH_SHORT).show());
                 loginDialog.cancel();
             }
             else
@@ -50,11 +57,14 @@ public class LoginDialogFragment extends DialogFragment implements DialogInterfa
         });
 
         sign_up.setOnClickListener(listener_up -> {
+
             if(hasConnection(getActivity())) {
-                Toast.makeText(getActivity(),
-                        sign_up.getText().toString(),
-                        Toast.LENGTH_SHORT).show();
-                loginDialog.cancel();
+
+                AuthUtils.signUp(
+                        entered_login.getText().toString(),
+                        entered_password.getText().toString(),
+                        (response) ->
+                                Toast.makeText(getActivity(), response, Toast.LENGTH_SHORT).show());
             }
             else
                 Toast.makeText(getActivity(),
