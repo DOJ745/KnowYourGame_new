@@ -13,7 +13,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import com.faa.knowyourgame_new.MainActivity;
 import com.faa.knowyourgame_new.R;
+import com.faa.knowyourgame_new.retrofit.utils.AuthUtils;
 
 import static com.faa.knowyourgame_new.MainActivity.hasConnection;
 
@@ -38,6 +40,7 @@ public class LoginDialogFragment extends DialogFragment implements DialogInterfa
 
         sign_in.setOnClickListener(listener_in -> {
             if(hasConnection(getActivity())) {
+
                 Toast.makeText(getActivity(),
                         sign_in.getText().toString(),
                         Toast.LENGTH_SHORT).show();
@@ -51,10 +54,12 @@ public class LoginDialogFragment extends DialogFragment implements DialogInterfa
 
         sign_up.setOnClickListener(listener_up -> {
             if(hasConnection(getActivity())) {
-                Toast.makeText(getActivity(),
-                        sign_up.getText().toString(),
-                        Toast.LENGTH_SHORT).show();
-                loginDialog.cancel();
+
+                AuthUtils.signUp(
+                        entered_login.getText().toString(),
+                        entered_password.getText().toString(),
+                        (message) ->
+                                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show());
             }
             else
                 Toast.makeText(getActivity(),
