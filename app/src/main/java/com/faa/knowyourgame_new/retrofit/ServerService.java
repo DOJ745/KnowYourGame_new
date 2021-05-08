@@ -20,6 +20,7 @@ public interface ServerService {
     @POST("/log_out")
     Call<LogoutDto> logout();
 
+
     //@GET("/get_data")
 
     @GET("/test_request")
