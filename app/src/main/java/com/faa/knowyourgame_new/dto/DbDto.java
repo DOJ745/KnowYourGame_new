@@ -7,9 +7,9 @@ import lombok.Data;
 
 @Data
 public class DbDto implements Serializable {
-    List<AnswersDto> answersDtoList;
-    List<LeagueDto> leagueDtoList;
-    List<ThemeDto> themeDtoList;
-    List<DifficultyDto> difficultyDtoList;
-    List<QuestionDto> questionDtoList;
+    List<AnswersDto> answers;
+    List<LeagueDto> leagues;
+    List<ThemeDto> themes;
+    List<DifficultyDto> difficulties;
+    List<QuestionDto> questions;
 }

@@ -1,5 +1,6 @@
 package com.faa.knowyourgame_new.retrofit;
 
+import com.faa.knowyourgame_new.dto.DbDto;
 import com.faa.knowyourgame_new.dto.LogoutDto;
 import com.faa.knowyourgame_new.dto.RegisterDto;
 import com.faa.knowyourgame_new.dto.UserDto;
@@ -20,8 +21,8 @@ public interface ServerService {
     @POST("/log_out")
     Call<LogoutDto> logout();
 
-
-    //@GET("/get_data")
+    @GET("/db/data")
+    Call<DbDto> getData();
 
     @GET("/test_request")
     Call<UserDto> getCheckUser();
