@@ -1,5 +1,5 @@
 package com.faa.knowyourgame_new.dto;
 
 public abstract class AbstractDto {
-    public int ID;
+    public int _id;
 }

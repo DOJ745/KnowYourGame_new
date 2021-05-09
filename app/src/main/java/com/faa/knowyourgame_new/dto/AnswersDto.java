@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class AnswersDto implements Serializable {
-    int ID;
+    int _id;
     int question_id;
     String text;
     int trueness;

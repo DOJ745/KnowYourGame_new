@@ -26,7 +26,7 @@ public class DbUtils {
                     @NotNull Call<DbDto> call,
                     @NotNull Response<DbDto> response) {
                 Log.d(TAG, "DATA FROM SERVER: " + response.body());
-                dbCallBack.dbData(String.valueOf(response.body().getThemes()));
+                dbCallBack.dbData(String.valueOf(response.body().getDifficulties()));
             }
 
             @Override
