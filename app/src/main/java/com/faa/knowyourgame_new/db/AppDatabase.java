@@ -3,6 +3,10 @@ package com.faa.knowyourgame_new.db;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
+import com.faa.knowyourgame_new.dao.AnswerDao;
+import com.faa.knowyourgame_new.dao.DifficultyDao;
+import com.faa.knowyourgame_new.dao.LeagueDao;
+import com.faa.knowyourgame_new.dao.QuestionDao;
 import com.faa.knowyourgame_new.dao.ThemeDao;
 import com.faa.knowyourgame_new.dao.UserDao;
 import com.faa.knowyourgame_new.entity.Answer;
@@ -26,4 +30,8 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();
     public abstract ThemeDao themeDao();
+    public abstract QuestionDao questionDao();
+    public abstract AnswerDao answerDao();
+    public abstract LeagueDao leagueDao();
+    public abstract DifficultyDao difficultyDao();
 }
