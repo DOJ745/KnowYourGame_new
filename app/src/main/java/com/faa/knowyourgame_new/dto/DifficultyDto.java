@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class DifficultyDto implements Serializable {
-    int ID;
+    int _id;
     String name;
     double multiplier;
 }

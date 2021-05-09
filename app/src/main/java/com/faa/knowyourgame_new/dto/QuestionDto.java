@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class QuestionDto implements Serializable {
-    int ID;
+    int _id;
     int difficulty_id;
     int theme_id;
     String text;
