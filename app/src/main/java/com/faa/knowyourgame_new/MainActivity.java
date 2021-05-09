@@ -4,8 +4,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.faa.knowyourgame_new.db.AppDatabase;
+import com.faa.knowyourgame_new.retrofit.utils.DbUtils;
 import com.faa.knowyourgame_new.ui.login_dialog.LoginDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -16,6 +18,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.room.Room;
+
+import static com.faa.knowyourgame_new.MainActivity.hasConnection;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,6 +61,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         loginDialogFragment.show(getSupportFragmentManager(), "LOGIN_DIALOG");
+
+        if(hasConnection(getApplicationContext())) {
+            DbUtils.getData((response) ->
+                    Toast.makeText(this,
+                            response,
+                            Toast.LENGTH_LONG).show());
+        }
 
 
         /*binding = DataBindingUtil.setContentView(this, R.layout.activity_main);

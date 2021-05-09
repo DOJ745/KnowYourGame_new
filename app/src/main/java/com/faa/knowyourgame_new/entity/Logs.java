@@ -1,9 +1,9 @@
 package com.faa.knowyourgame_new.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-
-import java.util.Date;
+import androidx.room.PrimaryKey;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import lombok.Setter;
 @Entity(tableName = "Logs")
 public class Logs {
 
-    @ColumnInfo(name = "Login")
+    @PrimaryKey@NonNull
     String login;
 
     @ColumnInfo(name = "AnswerStatus")
@@ -23,5 +23,5 @@ public class Logs {
     double points;
 
     @ColumnInfo(name = "DateTime")
-    Date dateTime;
+    String dateTime;
 }

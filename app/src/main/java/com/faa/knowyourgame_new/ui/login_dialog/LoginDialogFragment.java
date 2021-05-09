@@ -47,7 +47,7 @@ public class LoginDialogFragment extends DialogFragment implements DialogInterfa
                         (response) ->
                                 Toast.makeText(getActivity(),
                                         response.toString(),
-                                        Toast.LENGTH_SHORT).show());
+                                        Toast.LENGTH_LONG).show());
                 loginDialog.cancel();
             }
             else

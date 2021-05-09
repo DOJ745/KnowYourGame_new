@@ -1,5 +1,6 @@
 package com.faa.knowyourgame_new.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -10,7 +11,7 @@ import lombok.Data;
 @Entity(tableName = "User")
 public class User {
 
-    @PrimaryKey
+    @PrimaryKey@NonNull
     String login;
     
     @ColumnInfo(name = "Password")

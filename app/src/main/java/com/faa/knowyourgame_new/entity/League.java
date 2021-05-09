@@ -1,7 +1,9 @@
 package com.faa.knowyourgame_new.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +13,7 @@ import lombok.Setter;
 @Entity(tableName = "League")
 public class League {
 
-    @ColumnInfo(name = "Name")
+    @PrimaryKey@NonNull
     String name;
 
     @ColumnInfo(name = "Image")

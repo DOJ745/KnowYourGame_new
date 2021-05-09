@@ -1,5 +1,6 @@
 package com.faa.knowyourgame_new.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -13,7 +14,7 @@ import lombok.Setter;
 @Entity(tableName = "Answers")
 public class Answer {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey@NonNull
     int ID;
 
     @ForeignKey(entity = Question.class, parentColumns = "ID", childColumns = "Question_ID")
