@@ -9,6 +9,8 @@ import androidx.room.PrimaryKey;
 import lombok.Getter;
 import lombok.Setter;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 @Getter
 @Setter
 @Entity(tableName = "Question")
@@ -20,7 +22,11 @@ public class Question {
     @ForeignKey(entity = Difficulty.class, parentColumns = "ID", childColumns = "Difficulty_ID")
     int difficulty_id;
 
-    @ForeignKey(entity = Theme.class, parentColumns = "ID", childColumns = "Theme_ID")
+    @ForeignKey(
+            entity = Theme.class,
+            parentColumns = "ID",
+            childColumns = "Theme_ID",
+            onDelete = CASCADE)
     int theme_id;
 
     @ColumnInfo(name = "Text")
