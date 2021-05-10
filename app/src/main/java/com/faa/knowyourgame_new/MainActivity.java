@@ -4,9 +4,18 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.faa.knowyourgame_new.dao.AnswerDao;
+import com.faa.knowyourgame_new.dao.DifficultyDao;
+import com.faa.knowyourgame_new.dao.LeagueDao;
+import com.faa.knowyourgame_new.dao.QuestionDao;
+import com.faa.knowyourgame_new.dao.ThemeDao;
+import com.faa.knowyourgame_new.dao.UserDao;
+import com.faa.knowyourgame_new.db.App;
 import com.faa.knowyourgame_new.db.AppDatabase;
+import com.faa.knowyourgame_new.dto.DbDto;
 import com.faa.knowyourgame_new.retrofit.utils.DbUtils;
 import com.faa.knowyourgame_new.ui.login_dialog.LoginDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -18,14 +27,23 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.room.Room;
-
-import static com.faa.knowyourgame_new.MainActivity.hasConnection;
+import androidx.room.util.DBUtil;
 
 public class MainActivity extends AppCompatActivity {
 
 
     private DialogFragment loginDialogFragment = new LoginDialogFragment();
     private static final String TAG = "MainActivity";
+    public static AppDatabase db;
+
+    public static ThemeDao themeDao;
+    public static DifficultyDao difficultyDao;
+    public static QuestionDao questionDao;
+    public static AnswerDao answerDao;
+    public static LeagueDao leagueDao;
+    public static UserDao userDao;
+
+    public static DbDto dbDto;
 
     //private User test_user = new User();
     //private ActivityMainBinding binding;
@@ -38,8 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Initializing database
-        AppDatabase db =  Room.databaseBuilder(getApplicationContext(),
+        db =  Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "main_db").build();
+        initDao(db);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
@@ -63,10 +82,22 @@ public class MainActivity extends AppCompatActivity {
         loginDialogFragment.show(getSupportFragmentManager(), "LOGIN_DIALOG");
 
         if(hasConnection(getApplicationContext())) {
-            DbUtils.getData((response) ->
+            /*DbUtils.getData((response) ->
                     Toast.makeText(this,
-                            response,
-                            Toast.LENGTH_LONG).show());
+                            response.toString(),
+                            Toast.LENGTH_LONG).show());*/
+
+            dbDto = new DbDto();
+
+            DbUtils.getData((getDataResponse -> {
+                dbDto.setThemes(getDataResponse.getThemes());
+                dbDto.setDifficulties(getDataResponse.getDifficulties());
+                dbDto.setQuestions(getDataResponse.getQuestions());
+                dbDto.setAnswers(getDataResponse.getAnswers());
+                dbDto.setLeagues(getDataResponse.getLeagues());
+            }));
+
+            Log.d(TAG, dbDto.toString());
         }
 
 
@@ -81,8 +112,6 @@ public class MainActivity extends AppCompatActivity {
         binding.setUser(test_user);*/
 
         //new DownloadImageTask(imageView).execute(ApiUtils.BASE_SERVER_URL + "images/cat.jpg");
-
-        //registerUser();
     }
 
     public static boolean hasConnection(final Context context)
@@ -90,5 +119,14 @@ public class MainActivity extends AppCompatActivity {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    private void initDao(AppDatabase _db){
+        themeDao = _db.themeDao();
+        difficultyDao = _db.difficultyDao();
+        questionDao = _db.questionDao();
+        answerDao = _db.answerDao();
+        leagueDao = _db.leagueDao();
+        userDao = _db.userDao();
     }
 }

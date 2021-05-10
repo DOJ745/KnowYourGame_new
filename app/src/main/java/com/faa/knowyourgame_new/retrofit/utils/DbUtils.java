@@ -16,7 +16,7 @@ public class DbUtils {
     private static final String TAG = "DbUtils";
 
     public interface DbCallBack<T>{
-        void dbData(String getDataResponse);
+        void dbData(DbDto getDataResponse);
     }
 
     public static void getData(DbCallBack dbCallBack){
@@ -26,7 +26,7 @@ public class DbUtils {
                     @NotNull Call<DbDto> call,
                     @NotNull Response<DbDto> response) {
                 Log.d(TAG, "DATA FROM SERVER: " + response.body());
-                dbCallBack.dbData(String.valueOf(response.body().getDifficulties()));
+                dbCallBack.dbData(response.body());
             }
 
             @Override
