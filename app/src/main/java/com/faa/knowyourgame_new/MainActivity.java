@@ -1,6 +1,7 @@
 package com.faa.knowyourgame_new;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -39,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
     private DialogFragment loginDialogFragment = new LoginDialogFragment();
     private static final String TAG = "MainActivity";
+    private static final String PREFS_FILE = "Config";
+
+
     public static AppDatabase db;
 
     public static ThemeDao themeDao;
@@ -49,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
     public static UserDao userDao;
 
     public static DbDto dbDto;
+    public static SharedPreferences configuration;
+    public static SharedPreferences.Editor configEditor;
 
-    //private User test_user = new User();
-    //private ActivityMainBinding binding;
     //private ImageView imageView;
 
     @Override
@@ -59,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        int firstLaunch = 0;
 
         // Initializing database
         /*db =  Room.databaseBuilder(getApplicationContext(),
@@ -68,6 +73,12 @@ public class MainActivity extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
         initDao(db);
+
+        configuration = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
+        configEditor = configuration.edit();
+
+        configEditor.putInt("FIRST_LAUNCH", firstLaunch);
+        configEditor.apply();
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
@@ -91,47 +102,31 @@ public class MainActivity extends AppCompatActivity {
         loginDialogFragment.show(getSupportFragmentManager(), "LOGIN_DIALOG");
 
         if(hasConnection(getApplicationContext())) {
+
             DbUtils.getData((response) ->
                     Toast.makeText(this,
                             response.toString(),
                             Toast.LENGTH_LONG).show());
 
             dbDto = new DbDto();
-            ModelMapper modelMapper = new ModelMapper();
-
             DbUtils.getData((getDataResponse -> {
+
                 dbDto.setThemes(getDataResponse.getThemes());
                 dbDto.setDifficulties(getDataResponse.getDifficulties());
                 dbDto.setQuestions(getDataResponse.getQuestions());
                 dbDto.setAnswers(getDataResponse.getAnswers());
                 dbDto.setLeagues(getDataResponse.getLeagues());
 
-                Log.d(TAG, dbDto.toString());
-
-                //themeDao.insertMany(dbDto.getThemes());
-                List<Theme> testList = new ArrayList<>();
-                Theme testTheme = new Theme();
-                for(ThemeDto elem : dbDto.getThemes()){
-                    testTheme = modelMapper.map(elem, Theme.class);
-                    testList.add(testTheme);
+                if(configuration.getInt("FIRST_LAUNCH", 0) == 0) {
+                    firstLaunch(dbDto);
                 }
-                //themeDao.insertManyDto(dbDto.getThemes());
-                themeDao.insertMany(testList);
-                //Log.d(TAG, themeDao.getAllDto().get(0).toString());
-                Log.d(TAG, themeDao.getAll().get(0).toString());
+                else { checkForUpdates(dbDto); }
             }));
+
+            firstLaunch += 1;
+            configEditor.putInt("FIRST_LAUNCH", firstLaunch);
+            configEditor.apply();
         }
-
-
-        /*binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
-        imageView = findViewById(R.id.image_view);
-
-        test_user.setLogin("login");
-        test_user.setPassword("password");
-        test_user.setScore(0.0);
-
-        binding.setUser(test_user);*/
 
         //new DownloadImageTask(imageView).execute(ApiUtils.BASE_SERVER_URL + "images/cat.jpg");
     }
@@ -150,5 +145,55 @@ public class MainActivity extends AppCompatActivity {
         answerDao = _db.answerDao();
         leagueDao = _db.leagueDao();
         userDao = _db.userDao();
+    }
+
+    private void firstLaunch(DbDto dbDto) {
+
+        ModelMapper modelMapper = new ModelMapper();
+
+        List<Theme> serverThemes = new ArrayList<>();
+        Theme serverTheme = new Theme();
+
+        for(ThemeDto elem : dbDto.getThemes()){
+            serverTheme = modelMapper.map(elem, Theme.class);
+            serverThemes.add(serverTheme);
+        }
+
+        themeDao.insertMany(serverThemes);
+        Log.d(TAG, themeDao.getAll().get(0).toString());
+    }
+
+    private void checkForUpdates(DbDto dbDto) {
+
+        ModelMapper modelMapper = new ModelMapper();
+
+        Log.d(TAG, dbDto.toString());
+
+        List<Theme> serverThemes = new ArrayList<>();
+
+        Theme serverTheme = new Theme();
+        for(ThemeDto elem : dbDto.getThemes()) {
+            serverTheme = modelMapper.map(elem, Theme.class);
+            serverThemes.add(serverTheme);
+        }
+
+        List<Theme> dbThemes = themeDao.getAll();
+
+        for(Theme servTheme : serverThemes) {
+
+            if(dbThemes.contains(servTheme)) {
+                themeDao.update(servTheme);
+            }
+
+            // Removing same themes from temp collection
+            if(serverThemes.size() < dbThemes.size()) {
+                for(int i = 0; i < serverThemes.size(); i++) {
+                    dbThemes.remove(serverThemes.get(i));
+                }
+                // Deleting themes from DB
+                themeDao.deleteMany(dbThemes);
+            }
+
+        }
     }
 }

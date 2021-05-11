@@ -30,7 +30,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             InputStream in = new java.net.URL(urlDisplay).openStream();
             loadedImage = BitmapFactory.decodeStream(in);
 
-            File sdCardDirectory = null;//Environment.getExternalStorageDirectory();
+            File sdCardDirectory = Environment.getExternalStorageDirectory();
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
                 sdCardDirectory = Environment.getStorageDirectory();
             }
