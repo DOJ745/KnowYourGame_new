@@ -15,6 +15,8 @@ import com.faa.knowyourgame_new.dao.ThemeDao;
 import com.faa.knowyourgame_new.dao.UserDao;
 import com.faa.knowyourgame_new.db.AppDatabase;
 import com.faa.knowyourgame_new.dto.DbDto;
+import com.faa.knowyourgame_new.dto.ThemeDto;
+import com.faa.knowyourgame_new.entity.Theme;
 import com.faa.knowyourgame_new.retrofit.utils.DbUtils;
 import com.faa.knowyourgame_new.ui.login_dialog.LoginDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -26,6 +28,11 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.room.Room;
+
+import org.modelmapper.ModelMapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,8 +61,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Initializing database
+        /*db =  Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "main_db").build();*/
         db =  Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "main_db").build();
+                AppDatabase.class, "main_db")
+                .allowMainThreadQueries()
+                .build();
         initDao(db);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -86,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show());
 
             dbDto = new DbDto();
+            ModelMapper modelMapper = new ModelMapper();
 
             DbUtils.getData((getDataResponse -> {
                 dbDto.setThemes(getDataResponse.getThemes());
@@ -97,8 +109,16 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, dbDto.toString());
 
                 //themeDao.insertMany(dbDto.getThemes());
-                themeDao.insertManyDto(dbDto.getThemes());
-                Log.d(TAG, themeDao.getAllDto().get(0).toString());
+                List<Theme> testList = new ArrayList<>();
+                Theme testTheme = new Theme();
+                for(ThemeDto elem : dbDto.getThemes()){
+                    testTheme = modelMapper.map(elem, Theme.class);
+                    testList.add(testTheme);
+                }
+                //themeDao.insertManyDto(dbDto.getThemes());
+                themeDao.insertMany(testList);
+                //Log.d(TAG, themeDao.getAllDto().get(0).toString());
+                Log.d(TAG, themeDao.getAll().get(0).toString());
             }));
         }
 

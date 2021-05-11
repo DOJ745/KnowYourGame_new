@@ -15,23 +15,23 @@ import java.util.List;
 
 @Dao
 public interface ThemeDao {
-    @Query("SELECT * FROM Theme WHERE ID = :id")
+    @Query("SELECT * FROM Theme WHERE _id = :id")
     Theme getById(long id);
 
-    /*@Query("SELECT * FROM Theme")
-    ArrayList<Theme> getAll();*/
-
     @Query("SELECT * FROM Theme")
-    List<ThemeDto> getAllDto();
+    List<Theme> getAll();
+
+    /*@Query("SELECT * FROM Theme")
+    List<ThemeDto> getAllDto();*/
 
     @Insert
     void insert(Theme theme);
 
     @Insert
-    void insertMany(ArrayList<Theme> themes);
+    void insertMany(List<Theme> themes);
 
-    @Insert
-    void insertManyDto(List<ThemeDto> themes);
+    /*@Insert
+    void insertManyDto(List<ThemeDto> themes);*/
 
     @Update
     void update(Theme theme);

@@ -16,7 +16,7 @@ import static androidx.room.ForeignKey.CASCADE;
 @Entity(tableName = "Question")
 public class Question {
 
-    @PrimaryKey@NonNull
+    @PrimaryKey@NonNull@ColumnInfo(name = "_id")
     int ID;
 
     @ForeignKey(entity = Difficulty.class, parentColumns = "ID", childColumns = "difficulty_ID")

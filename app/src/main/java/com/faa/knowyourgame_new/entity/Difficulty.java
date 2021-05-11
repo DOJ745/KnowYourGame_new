@@ -13,7 +13,7 @@ import lombok.Setter;
 @Entity(tableName = "Difficulty")
 public class Difficulty {
 
-    @PrimaryKey@NonNull
+    @PrimaryKey@NonNull@ColumnInfo(name = "_id")
     int ID;
 
     @ColumnInfo(name = "name")

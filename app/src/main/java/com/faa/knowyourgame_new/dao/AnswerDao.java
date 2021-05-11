@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 @Dao
 public interface AnswerDao {
-    @Query("SELECT * FROM Answers WHERE ID = :id")
+    @Query("SELECT * FROM Answers WHERE _id = :id")
     Answer getById(long id);
 
     @Insert
