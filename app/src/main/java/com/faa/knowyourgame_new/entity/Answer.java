@@ -16,12 +16,12 @@ import static androidx.room.ForeignKey.CASCADE;
 @Entity(tableName = "Answers")
 public class Answer {
 
-    @PrimaryKey@NonNull@ColumnInfo(name = "_id")
-    int ID;
+    @PrimaryKey@NonNull
+    int _id;
 
     @ForeignKey(
             entity = Question.class,
-            parentColumns = "ID",
+            parentColumns = "_id",
             childColumns = "question_ID",
             onDelete = CASCADE)
     int question_id;

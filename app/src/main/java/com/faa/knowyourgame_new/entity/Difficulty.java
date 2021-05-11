@@ -13,8 +13,8 @@ import lombok.Setter;
 @Entity(tableName = "Difficulty")
 public class Difficulty {
 
-    @PrimaryKey@NonNull@ColumnInfo(name = "_id")
-    int ID;
+    @PrimaryKey@NonNull
+    int _id;
 
     @ColumnInfo(name = "name")
     String name;

@@ -13,8 +13,8 @@ import lombok.Setter;
 @Entity(tableName = "Theme")
 public class Theme {
 
-    @PrimaryKey@NonNull@ColumnInfo(name = "_id")
-    int ID;
+    @PrimaryKey@NonNull
+    int _id;
 
     @ColumnInfo(name = "name")
     String name;
