@@ -82,10 +82,10 @@ public class MainActivity extends AppCompatActivity {
         loginDialogFragment.show(getSupportFragmentManager(), "LOGIN_DIALOG");
 
         if(hasConnection(getApplicationContext())) {
-            /*DbUtils.getData((response) ->
+            DbUtils.getData((response) ->
                     Toast.makeText(this,
                             response.toString(),
-                            Toast.LENGTH_LONG).show());*/
+                            Toast.LENGTH_LONG).show());
 
             dbDto = new DbDto();
 
