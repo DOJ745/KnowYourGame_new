@@ -63,7 +63,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        int firstLaunch = 0;
+        configuration = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
+        configEditor = configuration.edit();
+
+        int firstLaunch = configuration.getInt("FIRST_LAUNCH", 0);
 
         // Initializing database
         /*db =  Room.databaseBuilder(getApplicationContext(),
@@ -73,12 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
         initDao(db);
-
-        configuration = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
-        configEditor = configuration.edit();
-
-        configEditor.putInt("FIRST_LAUNCH", firstLaunch);
-        configEditor.apply();
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
@@ -124,6 +121,9 @@ public class MainActivity extends AppCompatActivity {
             }));
 
             firstLaunch += 1;
+            configEditor.remove("FIRST_LAUNCH");
+            configEditor.apply();
+
             configEditor.putInt("FIRST_LAUNCH", firstLaunch);
             configEditor.apply();
         }
@@ -180,20 +180,22 @@ public class MainActivity extends AppCompatActivity {
         List<Theme> dbThemes = themeDao.getAll();
 
         for(Theme servTheme : serverThemes) {
-
             if(dbThemes.contains(servTheme)) {
                 themeDao.update(servTheme);
             }
-
-            // Removing same themes from temp collection
-            if(serverThemes.size() < dbThemes.size()) {
-                for(int i = 0; i < serverThemes.size(); i++) {
-                    dbThemes.remove(serverThemes.get(i));
-                }
-                // Deleting themes from DB
-                themeDao.deleteMany(dbThemes);
+            else{
+                dbThemes.add(servTheme);
+                themeDao.insert(servTheme);
             }
+        }
 
+        // Removing same themes from temp collection
+        if(serverThemes.size() < dbThemes.size()) {
+            for(int i = 0; i < serverThemes.size(); i++) {
+                dbThemes.remove(serverThemes.get(i));
+            }
+            // Deleting themes from DB
+            themeDao.deleteMany(dbThemes);
         }
     }
 }

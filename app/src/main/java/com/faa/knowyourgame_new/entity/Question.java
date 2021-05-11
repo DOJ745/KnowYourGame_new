@@ -6,11 +6,13 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import static androidx.room.ForeignKey.CASCADE;
 
+@EqualsAndHashCode
 @Getter
 @Setter
 @Entity(tableName = "Question")

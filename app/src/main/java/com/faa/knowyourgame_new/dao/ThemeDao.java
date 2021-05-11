@@ -22,7 +22,7 @@ public interface ThemeDao {
     @Query("SELECT * FROM Theme")
     List<Theme> getAll();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Theme theme);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

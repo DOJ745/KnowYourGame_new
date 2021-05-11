@@ -6,7 +6,9 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode
 @Data
 @Entity(tableName = "User")
 public class User {
