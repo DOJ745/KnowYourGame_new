@@ -9,7 +9,7 @@ import com.faa.knowyourgame_new.entity.User;
 
 @Dao
 public interface UserDao {
-    @Query("SELECT * FROM user WHERE login = :login")
+    @Query("SELECT * FROM User WHERE login = :login")
     User getByLogin(String login);
 
     @Insert

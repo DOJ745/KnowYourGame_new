@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 @Dao
 public interface LeagueDao {
-    @Query("SELECT * FROM league WHERE name = :name")
+    @Query("SELECT * FROM League WHERE name = :name")
     League getByName(String name);
 
     @Insert

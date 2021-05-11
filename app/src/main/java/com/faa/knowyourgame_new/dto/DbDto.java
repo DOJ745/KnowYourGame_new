@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import lombok.Data;
 
@@ -15,7 +16,7 @@ public class DbDto implements Serializable {
     @SerializedName("leagues") @Expose
     private ArrayList<LeagueDto> leagues;
     @SerializedName("themes") @Expose
-    private ArrayList<ThemeDto> themes;
+    private List<ThemeDto> themes;
     @SerializedName("difficulties") @Expose
     private ArrayList<DifficultyDto> difficulties;
     @SerializedName("questions") @Expose

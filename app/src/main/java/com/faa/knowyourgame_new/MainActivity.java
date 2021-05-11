@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //themeDao.insertMany(dbDto.getThemes());
                 themeDao.insertManyDto(dbDto.getThemes());
+                Log.d(TAG, themeDao.getAllDto().get(0).toString());
             }));
         }
 

@@ -74,4 +74,7 @@ dependencies {
         resolutionStrategy.force "org.antlr:antlr4-runtime:4.5.3"
         resolutionStrategy.force "org.antlr:antlr4-tool:4.5.3"
     }*/
+
+    // Model Mapper
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.2'
 }
