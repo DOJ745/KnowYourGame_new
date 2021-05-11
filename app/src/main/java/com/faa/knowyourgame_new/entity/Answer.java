@@ -22,13 +22,13 @@ public class Answer {
     @ForeignKey(
             entity = Question.class,
             parentColumns = "ID",
-            childColumns = "Question_ID",
+            childColumns = "question_ID",
             onDelete = CASCADE)
     int question_id;
 
-    @ColumnInfo(name = "Text")
+    @ColumnInfo(name = "text")
     String text;
 
-    @ColumnInfo(name = "Trueness")
+    @ColumnInfo(name = "trueness")
     int trueness;
 }

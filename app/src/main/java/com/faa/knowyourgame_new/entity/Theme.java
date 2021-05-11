@@ -16,6 +16,6 @@ public class Theme {
     @PrimaryKey@NonNull
     int ID;
 
-    @ColumnInfo(name = "Name")
+    @ColumnInfo(name = "name")
     String name;
 }

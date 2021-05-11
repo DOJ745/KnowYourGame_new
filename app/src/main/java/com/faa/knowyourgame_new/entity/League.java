@@ -16,9 +16,9 @@ public class League {
     @PrimaryKey@NonNull
     String name;
 
-    @ColumnInfo(name = "Image")
+    @ColumnInfo(name = "image")
     String image; // URL
 
-    @ColumnInfo(name = "Rating")
+    @ColumnInfo(name = "rating")
     int rating;
 }

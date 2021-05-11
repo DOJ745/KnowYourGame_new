@@ -19,22 +19,22 @@ public class Question {
     @PrimaryKey@NonNull
     int ID;
 
-    @ForeignKey(entity = Difficulty.class, parentColumns = "ID", childColumns = "Difficulty_ID")
+    @ForeignKey(entity = Difficulty.class, parentColumns = "ID", childColumns = "difficulty_ID")
     int difficulty_id;
 
     @ForeignKey(
             entity = Theme.class,
             parentColumns = "ID",
-            childColumns = "Theme_ID",
+            childColumns = "theme_ID",
             onDelete = CASCADE)
     int theme_id;
 
-    @ColumnInfo(name = "Text")
+    @ColumnInfo(name = "text")
     String text;
 
-    @ColumnInfo(name = "Image")
+    @ColumnInfo(name = "image")
     String image; // URL
 
-    @ColumnInfo(name = "Cost")
+    @ColumnInfo(name = "cost")
     int cost;
 }

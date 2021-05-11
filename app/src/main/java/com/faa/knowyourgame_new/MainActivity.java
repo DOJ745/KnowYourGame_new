@@ -13,7 +13,6 @@ import com.faa.knowyourgame_new.dao.LeagueDao;
 import com.faa.knowyourgame_new.dao.QuestionDao;
 import com.faa.knowyourgame_new.dao.ThemeDao;
 import com.faa.knowyourgame_new.dao.UserDao;
-import com.faa.knowyourgame_new.db.App;
 import com.faa.knowyourgame_new.db.AppDatabase;
 import com.faa.knowyourgame_new.dto.DbDto;
 import com.faa.knowyourgame_new.retrofit.utils.DbUtils;
@@ -27,7 +26,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.room.Room;
-import androidx.room.util.DBUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -95,9 +93,12 @@ public class MainActivity extends AppCompatActivity {
                 dbDto.setQuestions(getDataResponse.getQuestions());
                 dbDto.setAnswers(getDataResponse.getAnswers());
                 dbDto.setLeagues(getDataResponse.getLeagues());
-            }));
 
-            Log.d(TAG, dbDto.toString());
+                Log.d(TAG, dbDto.toString());
+
+                //themeDao.insertMany(dbDto.getThemes());
+                themeDao.insertManyDto(dbDto.getThemes());
+            }));
         }
 
 

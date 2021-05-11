@@ -14,9 +14,9 @@ public class User {
     @PrimaryKey@NonNull
     String login;
     
-    @ColumnInfo(name = "Password")
+    @ColumnInfo(name = "password")
     String password; // create hash-func for password
 
-    @ColumnInfo(name = "Score")
+    @ColumnInfo(name = "score")
     Double score;
 }

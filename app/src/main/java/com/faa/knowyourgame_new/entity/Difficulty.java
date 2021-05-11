@@ -16,9 +16,9 @@ public class Difficulty {
     @PrimaryKey@NonNull
     int ID;
 
-    @ColumnInfo(name = "Name")
+    @ColumnInfo(name = "name")
     String name;
 
-    @ColumnInfo(name = "Multiplier")
+    @ColumnInfo(name = "multiplier")
     Double multiplier;
 }

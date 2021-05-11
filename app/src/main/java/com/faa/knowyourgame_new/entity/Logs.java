@@ -16,12 +16,12 @@ public class Logs {
     @PrimaryKey@NonNull
     String login;
 
-    @ColumnInfo(name = "AnswerStatus")
+    @ColumnInfo(name = "answer_status")
     int answerStatus;
 
-    @ColumnInfo(name = "Points")
+    @ColumnInfo(name = "points")
     double points;
 
-    @ColumnInfo(name = "DateTime")
+    @ColumnInfo(name = "date_time")
     String dateTime;
 }

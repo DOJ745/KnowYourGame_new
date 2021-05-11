@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.faa.knowyourgame_new.dto.ThemeDto;
 import com.faa.knowyourgame_new.entity.Answer;
 import com.faa.knowyourgame_new.entity.Theme;
 
@@ -21,6 +22,9 @@ public interface ThemeDao {
 
     @Insert
     void insertMany(ArrayList<Theme> themes);
+
+    @Insert
+    void insertManyDto(ArrayList<ThemeDto> themes);
 
     @Update
     void update(Theme theme);
