@@ -3,13 +3,13 @@ package com.faa.knowyourgame_new.dao;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.faa.knowyourgame_new.entity.Answer;
 import com.faa.knowyourgame_new.entity.Question;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Dao
 public interface QuestionDao {
@@ -19,15 +19,15 @@ public interface QuestionDao {
     @Insert
     void insert(Question question);
 
-    @Insert
-    void insertMany(ArrayList<Question> questions);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertMany(List<Question> questions);
 
     @Update
     void update(Question question);
 
     @Update
-    void updateMany(ArrayList<Question> questions);
+    void updateMany(List<Question> questions);
 
     @Delete
-    void deleteMany(ArrayList<Question> questions);
+    void deleteMany(List<Question> questions);
 }

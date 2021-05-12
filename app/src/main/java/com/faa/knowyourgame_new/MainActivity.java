@@ -115,9 +115,9 @@ public class MainActivity extends AppCompatActivity {
                 dbDto.setLeagues(getDataResponse.getLeagues());
 
                 if(configuration.getInt("FIRST_LAUNCH", 0) == 0) {
-                    firstLaunch(dbDto);
+                    DbUtils.firstLaunch(dbDto, themeDao);
                 }
-                else { checkForUpdates(dbDto); }
+                else { DbUtils.checkForUpdates(dbDto, themeDao); }
             }));
 
             firstLaunch += 1;
@@ -145,57 +145,5 @@ public class MainActivity extends AppCompatActivity {
         answerDao = _db.answerDao();
         leagueDao = _db.leagueDao();
         userDao = _db.userDao();
-    }
-
-    private void firstLaunch(DbDto dbDto) {
-
-        ModelMapper modelMapper = new ModelMapper();
-
-        List<Theme> serverThemes = new ArrayList<>();
-        Theme serverTheme = new Theme();
-
-        for(ThemeDto elem : dbDto.getThemes()){
-            serverTheme = modelMapper.map(elem, Theme.class);
-            serverThemes.add(serverTheme);
-        }
-
-        themeDao.insertMany(serverThemes);
-        Log.d(TAG, themeDao.getAll().get(0).toString());
-    }
-
-    private void checkForUpdates(DbDto dbDto) {
-
-        ModelMapper modelMapper = new ModelMapper();
-
-        Log.d(TAG, dbDto.toString());
-
-        List<Theme> serverThemes = new ArrayList<>();
-
-        Theme serverTheme = new Theme();
-        for(ThemeDto elem : dbDto.getThemes()) {
-            serverTheme = modelMapper.map(elem, Theme.class);
-            serverThemes.add(serverTheme);
-        }
-
-        List<Theme> dbThemes = themeDao.getAll();
-
-        for(Theme servTheme : serverThemes) {
-            if(dbThemes.contains(servTheme)) {
-                themeDao.update(servTheme);
-            }
-            else{
-                dbThemes.add(servTheme);
-                themeDao.insert(servTheme);
-            }
-        }
-
-        // Removing same themes from temp collection
-        if(serverThemes.size() < dbThemes.size()) {
-            for(int i = 0; i < serverThemes.size(); i++) {
-                dbThemes.remove(serverThemes.get(i));
-            }
-            // Deleting themes from DB
-            themeDao.deleteMany(dbThemes);
-        }
     }
 }
