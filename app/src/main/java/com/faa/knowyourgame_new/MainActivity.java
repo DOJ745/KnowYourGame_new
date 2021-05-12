@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private DialogFragment loginDialogFragment = new LoginDialogFragment();
     private static final String TAG = "MainActivity";
     private static final String PREFS_FILE = "Config";
-
-
     public static AppDatabase db;
 
     public static ThemeDao themeDao;
