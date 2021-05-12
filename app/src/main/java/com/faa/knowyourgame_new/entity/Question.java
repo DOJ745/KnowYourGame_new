@@ -21,13 +21,16 @@ public class Question {
     @PrimaryKey@NonNull
     int _id;
 
-    @ForeignKey(entity = Difficulty.class, parentColumns = "_id", childColumns = "difficulty_ID")
+    @ForeignKey(
+            entity = Difficulty.class,
+            parentColumns = "_id",
+            childColumns = "difficulty_id")
     int difficulty_id;
 
     @ForeignKey(
             entity = Theme.class,
             parentColumns = "_id",
-            childColumns = "theme_ID",
+            childColumns = "theme_id",
             onDelete = CASCADE)
     int theme_id;
 

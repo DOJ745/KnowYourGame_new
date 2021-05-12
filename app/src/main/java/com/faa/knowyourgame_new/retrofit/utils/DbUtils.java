@@ -96,8 +96,6 @@ public class DbUtils {
             QuestionDao questionDao,
             AnswerDao answerDao) {
 
-        ModelMapper modelMapper = new ModelMapper();
-
         Log.d(TAG + ":CHECK_FOR_UPDATES", dbDto.toString());
 
         List<Theme> serverThemes = new ArrayList<>();

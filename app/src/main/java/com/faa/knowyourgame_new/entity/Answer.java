@@ -24,7 +24,7 @@ public class Answer {
     @ForeignKey(
             entity = Question.class,
             parentColumns = "_id",
-            childColumns = "question_ID",
+            childColumns = "question_id",
             onDelete = CASCADE)
     int question_id;
 
