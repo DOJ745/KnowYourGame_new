@@ -66,8 +66,6 @@ public class DbUtils {
             QuestionDao questionDao,
             AnswerDao answerDao) {
 
-        ModelMapper modelMapper = new ModelMapper();
-
         Log.d(TAG + ":FIRST_LAUNCH", dbDto.toString());
 
         List<Theme> serverThemes = new ArrayList<>();
@@ -76,36 +74,12 @@ public class DbUtils {
         List<Question> serverQuestions = new ArrayList<>();
         List<Answer> serverAnswers = new ArrayList<>();
 
-        Theme serverTheme = new Theme();
-        Difficulty serverDifficulty = new Difficulty();
-        League serverLeague = new League();
-        Question serverQuestion = new Question();
-        Answer serverAnswer = new Answer();
-
-        for(ThemeDto elem : dbDto.getThemes()){
-            serverTheme = modelMapper.map(elem, Theme.class);
-            serverThemes.add(serverTheme);
-        }
-
-        for(DifficultyDto elem: dbDto.getDifficulties()){
-            serverDifficulty = modelMapper.map(elem, Difficulty.class);
-            serverDifficulties.add(serverDifficulty);
-        }
-
-        for(LeagueDto elem: dbDto.getLeagues()){
-            serverLeague = modelMapper.map(elem, League.class);
-            serverLeagues.add(serverLeague);
-        }
-
-        for(QuestionDto elem: dbDto.getQuestions()){
-            serverQuestion = modelMapper.map(elem, Question.class);
-            serverQuestions.add(serverQuestion);
-        }
-
-        for(AnswersDto elem: dbDto.getAnswers()){
-            serverAnswer = modelMapper.map(elem, Answer.class);
-            serverAnswers.add(serverAnswer);
-        }
+        mapDto(dbDto,
+                serverThemes,
+                serverDifficulties,
+                serverLeagues,
+                serverQuestions,
+                serverAnswers);
 
         themeDao.insertMany(serverThemes);
         difficultyDao.insertMany(serverDifficulties);
@@ -132,11 +106,73 @@ public class DbUtils {
         List<Question> serverQuestions = new ArrayList<>();
         List<Answer> serverAnswers = new ArrayList<>();
 
-        Theme serverTheme = new Theme();
-        Difficulty serverDifficulty = new Difficulty();
-        League serverLeague = new League();
-        Question serverQuestion = new Question();
-        Answer serverAnswer = new Answer();
+        mapDto(dbDto,
+                serverThemes,
+                serverDifficulties,
+                serverLeagues,
+                serverQuestions,
+                serverAnswers);
+
+        List<Theme> dbThemes = themeDao.getAll();
+        List<Difficulty> dbDifficulties = difficultyDao.getAll();
+        List<League> dbLeagues = leagueDao.getAll();
+        List<Question> dbQuestions = questionDao.getAll();
+        List<Answer> dbAnswers = answerDao.getAll();
+
+        insertMissingInDbAndUpdateExist(
+                themeDao,
+                difficultyDao,
+                leagueDao,
+                questionDao,
+                answerDao,
+
+                serverThemes,
+                serverDifficulties,
+                serverLeagues,
+                serverQuestions,
+                serverAnswers,
+
+                dbThemes,
+                dbDifficulties,
+                dbLeagues,
+                dbQuestions,
+                dbAnswers);
+
+        deleteData(
+                themeDao,
+                difficultyDao,
+                leagueDao,
+                questionDao,
+                answerDao,
+
+                serverThemes,
+                serverDifficulties,
+                serverLeagues,
+                serverQuestions,
+                serverAnswers,
+
+                dbThemes,
+                dbDifficulties,
+                dbLeagues,
+                dbQuestions,
+                dbAnswers);
+    }
+
+    private static void mapDto(
+            DbDto dbDto,
+            List<Theme> serverThemes,
+            List<Difficulty> serverDifficulties,
+            List<League> serverLeagues,
+            List<Question> serverQuestions,
+            List<Answer> serverAnswers) {
+
+        ModelMapper modelMapper = new ModelMapper();
+
+        Theme serverTheme;
+        Difficulty serverDifficulty;
+        League serverLeague;
+        Question serverQuestion;
+        Answer serverAnswer;
 
         for(ThemeDto elem : dbDto.getThemes()){
             serverTheme = modelMapper.map(elem, Theme.class);
@@ -162,19 +198,96 @@ public class DbUtils {
             serverAnswer = modelMapper.map(elem, Answer.class);
             serverAnswers.add(serverAnswer);
         }
+    }
 
-        List<Theme> dbThemes = themeDao.getAll();
-        List<Difficulty> dbDifficulties = difficultyDao.getAll();
+    private static void insertMissingInDbAndUpdateExist(
+            ThemeDao themeDao,
+            DifficultyDao difficultyDao,
+            LeagueDao leagueDao,
+            QuestionDao questionDao,
+            AnswerDao answerDao,
 
-        for(Theme servTheme : serverThemes) {
-            if(dbThemes.contains(servTheme)) {
-                themeDao.update(servTheme);
+            List<Theme> serverThemes,
+            List<Difficulty> serverDifficulties,
+            List<League> serverLeagues,
+            List<Question> serverQuestions,
+            List<Answer> serverAnswers,
+
+            List<Theme> dbThemes,
+            List<Difficulty> dbDifficulties,
+            List<League> dbLeagues,
+            List<Question> dbQuestions,
+            List<Answer> dbAnswers){
+
+        for(Theme _serverTheme : serverThemes) {
+            if(dbThemes.contains(_serverTheme)) {
+                themeDao.update(_serverTheme);
             }
             else{
-                dbThemes.add(servTheme);
-                themeDao.insert(servTheme);
+                dbThemes.add(_serverTheme);
+                themeDao.insert(_serverTheme);
             }
         }
+
+        for(Difficulty _serverDifficulty : serverDifficulties) {
+            if(dbDifficulties.contains(_serverDifficulty)) {
+                difficultyDao.update(_serverDifficulty);
+            }
+            else{
+                dbDifficulties.add(_serverDifficulty);
+                difficultyDao.insert(_serverDifficulty);
+            }
+        }
+
+        for(League _serverLeague : serverLeagues) {
+            if(dbLeagues.contains(_serverLeague)) {
+                leagueDao.update(_serverLeague);
+            }
+            else{
+                dbLeagues.add(_serverLeague);
+                leagueDao.insert(_serverLeague);
+            }
+        }
+
+        for(Question _serverQuestion : serverQuestions) {
+            if(dbQuestions.contains(_serverQuestion)) {
+                questionDao.update(_serverQuestion);
+            }
+            else{
+                dbQuestions.add(_serverQuestion);
+                questionDao.insert(_serverQuestion);
+            }
+        }
+
+        for(Answer _serverAnswer : serverAnswers) {
+            if(dbAnswers.contains(_serverAnswer)) {
+                answerDao.update(_serverAnswer);
+            }
+            else{
+                dbAnswers.add(_serverAnswer);
+                answerDao.insert(_serverAnswer);
+            }
+        }
+    }
+
+    private static void deleteData(
+            ThemeDao themeDao,
+            DifficultyDao difficultyDao,
+            LeagueDao leagueDao,
+            QuestionDao questionDao,
+            AnswerDao answerDao,
+
+            List<Theme> serverThemes,
+            List<Difficulty> serverDifficulties,
+            List<League> serverLeagues,
+            List<Question> serverQuestions,
+            List<Answer> serverAnswers,
+
+            List<Theme> dbThemes,
+            List<Difficulty> dbDifficulties,
+            List<League> dbLeagues,
+            List<Question> dbQuestions,
+            List<Answer> dbAnswers){
 
         // Removing same themes from temp collection
         if(serverThemes.size() < dbThemes.size()) {
@@ -183,6 +296,34 @@ public class DbUtils {
             }
             // Deleting themes from DB
             themeDao.deleteMany(dbThemes);
+        }
+
+        if(serverDifficulties.size() < dbDifficulties.size()) {
+            for(int i = 0; i < serverDifficulties.size(); i++) {
+                dbDifficulties.remove(serverDifficulties.get(i));
+            }
+            difficultyDao.deleteMany(dbDifficulties);
+        }
+
+        if(serverLeagues.size() < dbLeagues.size()) {
+            for(int i = 0; i < serverLeagues.size(); i++) {
+                dbLeagues.remove(serverLeagues.get(i));
+            }
+            leagueDao.deleteMany(dbLeagues);
+        }
+
+        if(serverQuestions.size() < dbQuestions.size()) {
+            for(int i = 0; i < serverQuestions.size(); i++) {
+                dbQuestions.remove(serverQuestions.get(i));
+            }
+            questionDao.deleteMany(dbQuestions);
+        }
+
+        if(serverAnswers.size() < dbAnswers.size()) {
+            for(int i = 0; i < serverAnswers.size(); i++) {
+                dbAnswers.remove(serverAnswers.get(i));
+            }
+            answerDao.deleteMany(dbAnswers);
         }
     }
 }
