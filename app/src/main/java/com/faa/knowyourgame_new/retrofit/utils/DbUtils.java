@@ -13,6 +13,7 @@ import retrofit2.Response;
 import static com.faa.knowyourgame_new.retrofit.RetrofitClient.myService;
 
 public class DbUtils {
+
     private static final String TAG = "DbUtils";
 
     public interface DbCallBack<T>{
