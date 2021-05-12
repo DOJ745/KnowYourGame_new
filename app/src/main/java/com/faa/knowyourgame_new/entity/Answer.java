@@ -15,17 +15,16 @@ import static androidx.room.ForeignKey.CASCADE;
 @EqualsAndHashCode
 @Getter
 @Setter
-@Entity(tableName = "Answers")
+@Entity(tableName = "Answers", foreignKeys = @ForeignKey(
+        entity = Question.class,
+        childColumns = "question_id",
+        parentColumns = "_id",
+        onDelete = CASCADE))
 public class Answer {
 
     @PrimaryKey@NonNull
     int _id;
 
-    @ForeignKey(
-            entity = Question.class,
-            parentColumns = "_id",
-            childColumns = "question_id",
-            onDelete = CASCADE)
     int question_id;
 
     @ColumnInfo(name = "text")

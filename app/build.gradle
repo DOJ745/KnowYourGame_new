@@ -70,7 +70,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
 
     // Android Data Binding
-    implementation 'org.antlr:antlr4:4.9.1'
+    implementation 'org.antlr:antlr4:4.9.2'
     /*configurations.all {
         resolutionStrategy.force "org.antlr:antlr4-runtime:4.5.3"
         resolutionStrategy.force "org.antlr:antlr4-tool:4.5.3"
