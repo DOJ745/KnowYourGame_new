@@ -7,7 +7,11 @@ import com.faa.knowyourgame_new.dao.DifficultyDao;
 import com.faa.knowyourgame_new.dao.LeagueDao;
 import com.faa.knowyourgame_new.dao.QuestionDao;
 import com.faa.knowyourgame_new.dao.ThemeDao;
+import com.faa.knowyourgame_new.dto.AnswersDto;
 import com.faa.knowyourgame_new.dto.DbDto;
+import com.faa.knowyourgame_new.dto.DifficultyDto;
+import com.faa.knowyourgame_new.dto.LeagueDto;
+import com.faa.knowyourgame_new.dto.QuestionDto;
 import com.faa.knowyourgame_new.dto.ThemeDto;
 import com.faa.knowyourgame_new.entity.Answer;
 import com.faa.knowyourgame_new.entity.Difficulty;
@@ -64,6 +68,8 @@ public class DbUtils {
 
         ModelMapper modelMapper = new ModelMapper();
 
+        Log.d(TAG + ":FIRST_LAUNCH", dbDto.toString());
+
         List<Theme> serverThemes = new ArrayList<>();
         List<Difficulty> serverDifficulties = new ArrayList<>();
         List<League> serverLeagues = new ArrayList<>();
@@ -81,19 +87,44 @@ public class DbUtils {
             serverThemes.add(serverTheme);
         }
 
+        for(DifficultyDto elem: dbDto.getDifficulties()){
+            serverDifficulty = modelMapper.map(elem, Difficulty.class);
+            serverDifficulties.add(serverDifficulty);
+        }
+
+        for(LeagueDto elem: dbDto.getLeagues()){
+            serverLeague = modelMapper.map(elem, League.class);
+            serverLeagues.add(serverLeague);
+        }
+
+        for(QuestionDto elem: dbDto.getQuestions()){
+            serverQuestion = modelMapper.map(elem, Question.class);
+            serverQuestions.add(serverQuestion);
+        }
+
+        for(AnswersDto elem: dbDto.getAnswers()){
+            serverAnswer = modelMapper.map(elem, Answer.class);
+            serverAnswers.add(serverAnswer);
+        }
+
         themeDao.insertMany(serverThemes);
         difficultyDao.insertMany(serverDifficulties);
         leagueDao.insertMany(serverLeagues);
-        questionDao.insertMany();
-        answerDao.insertMany();
-        //Log.d(TAG, themeDao.getAll().get(0).toString());
+        questionDao.insertMany(serverQuestions);
+        answerDao.insertMany(serverAnswers);
     }
 
-    public static void checkForUpdates(DbDto dbDto, ThemeDao themeDao) {
+    public static void checkForUpdates(
+            DbDto dbDto,
+            ThemeDao themeDao,
+            DifficultyDao difficultyDao,
+            LeagueDao leagueDao,
+            QuestionDao questionDao,
+            AnswerDao answerDao) {
 
         ModelMapper modelMapper = new ModelMapper();
 
-        Log.d(TAG, dbDto.toString());
+        Log.d(TAG + ":CHECK_FOR_UPDATES", dbDto.toString());
 
         List<Theme> serverThemes = new ArrayList<>();
         List<Difficulty> serverDifficulties = new ArrayList<>();
@@ -102,12 +133,38 @@ public class DbUtils {
         List<Answer> serverAnswers = new ArrayList<>();
 
         Theme serverTheme = new Theme();
-        for(ThemeDto elem : dbDto.getThemes()) {
+        Difficulty serverDifficulty = new Difficulty();
+        League serverLeague = new League();
+        Question serverQuestion = new Question();
+        Answer serverAnswer = new Answer();
+
+        for(ThemeDto elem : dbDto.getThemes()){
             serverTheme = modelMapper.map(elem, Theme.class);
             serverThemes.add(serverTheme);
         }
 
+        for(DifficultyDto elem: dbDto.getDifficulties()){
+            serverDifficulty = modelMapper.map(elem, Difficulty.class);
+            serverDifficulties.add(serverDifficulty);
+        }
+
+        for(LeagueDto elem: dbDto.getLeagues()){
+            serverLeague = modelMapper.map(elem, League.class);
+            serverLeagues.add(serverLeague);
+        }
+
+        for(QuestionDto elem: dbDto.getQuestions()){
+            serverQuestion = modelMapper.map(elem, Question.class);
+            serverQuestions.add(serverQuestion);
+        }
+
+        for(AnswersDto elem: dbDto.getAnswers()){
+            serverAnswer = modelMapper.map(elem, Answer.class);
+            serverAnswers.add(serverAnswer);
+        }
+
         List<Theme> dbThemes = themeDao.getAll();
+        List<Difficulty> dbDifficulties = difficultyDao.getAll();
 
         for(Theme servTheme : serverThemes) {
             if(dbThemes.contains(servTheme)) {

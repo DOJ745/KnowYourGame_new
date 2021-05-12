@@ -9,6 +9,7 @@ import androidx.room.Update;
 
 import com.faa.knowyourgame_new.entity.Answer;
 import com.faa.knowyourgame_new.entity.Difficulty;
+import com.faa.knowyourgame_new.entity.Theme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,9 @@ import java.util.List;
 public interface DifficultyDao {
     @Query("SELECT * FROM Difficulty WHERE _id = :id")
     Difficulty getById(long id);
+
+    @Query("SELECT * FROM Difficulty")
+    List<Difficulty> getAll();
 
     @Insert
     void insert(Difficulty difficulty);

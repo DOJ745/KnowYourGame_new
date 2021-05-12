@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.faa.knowyourgame_new.dao.AnswerDao;
@@ -16,8 +15,6 @@ import com.faa.knowyourgame_new.dao.ThemeDao;
 import com.faa.knowyourgame_new.dao.UserDao;
 import com.faa.knowyourgame_new.db.AppDatabase;
 import com.faa.knowyourgame_new.dto.DbDto;
-import com.faa.knowyourgame_new.dto.ThemeDto;
-import com.faa.knowyourgame_new.entity.Theme;
 import com.faa.knowyourgame_new.retrofit.utils.DbUtils;
 import com.faa.knowyourgame_new.ui.login_dialog.LoginDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -29,11 +26,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.room.Room;
-
-import org.modelmapper.ModelMapper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -115,9 +107,22 @@ public class MainActivity extends AppCompatActivity {
                 dbDto.setLeagues(getDataResponse.getLeagues());
 
                 if(configuration.getInt("FIRST_LAUNCH", 0) == 0) {
-                    DbUtils.firstLaunch(dbDto, themeDao);
+                    DbUtils.firstLaunch(
+                            dbDto,
+                            themeDao,
+                            difficultyDao,
+                            leagueDao,
+                            questionDao,
+                            answerDao);
                 }
-                else { DbUtils.checkForUpdates(dbDto, themeDao); }
+                else { DbUtils.checkForUpdates(
+                        dbDto,
+                        themeDao,
+                        difficultyDao,
+                        leagueDao,
+                        questionDao,
+                        answerDao);
+                }
             }));
 
             firstLaunch += 1;

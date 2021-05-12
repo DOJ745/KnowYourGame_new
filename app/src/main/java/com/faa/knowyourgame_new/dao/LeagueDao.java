@@ -8,6 +8,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.faa.knowyourgame_new.entity.League;
+import com.faa.knowyourgame_new.entity.Theme;
 
 import java.util.List;
 
@@ -15,6 +16,9 @@ import java.util.List;
 public interface LeagueDao {
     @Query("SELECT * FROM League WHERE name = :name")
     League getByName(String name);
+
+    @Query("SELECT * FROM League")
+    List<League> getAll();
 
     @Insert
     void insert(League league);
