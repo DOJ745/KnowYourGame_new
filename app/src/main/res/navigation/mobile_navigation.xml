@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.faa.knowyourgame_new.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:name="com.faa.knowyourgame_new.ui.logout.LogoutFragment"
+        android:label="@string/title_logout"
+        tools:layout="@layout/fragment_logout" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.faa.knowyourgame_new.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:name="com.faa.knowyourgame_new.ui.info.InfoFragment"
+        android:label="@string/title_info"
+        tools:layout="@layout/fragment_info" />
 </navigation>

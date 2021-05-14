@@ -33,7 +33,7 @@ public class AuthUtils {
         void logout(String logoutResponse);
     }
 
-    public static void logOut(LogoutCallBack logoutCallBack){
+    public static void logOut(){
         myService.logout().enqueue(new Callback<LogoutDto>() {
 
             @Override
@@ -41,7 +41,7 @@ public class AuthUtils {
                     @NotNull Call<LogoutDto> call,
                     @NotNull Response<LogoutDto> response) {
                 Log.d(TAG, "Logout user status: " + response.body());
-                logoutCallBack.logout(String.valueOf(response.body().getLogoutStatus()));
+                //logoutCallBack.logout(String.valueOf(response.body().getLogout()));
             }
 
             @Override

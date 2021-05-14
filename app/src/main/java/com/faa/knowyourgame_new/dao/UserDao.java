@@ -3,6 +3,7 @@ package com.faa.knowyourgame_new.dao;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -13,7 +14,7 @@ public interface UserDao {
     @Query("SELECT * FROM User WHERE login = :login")
     User getByLogin(String login);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(User user);
 
     @Update

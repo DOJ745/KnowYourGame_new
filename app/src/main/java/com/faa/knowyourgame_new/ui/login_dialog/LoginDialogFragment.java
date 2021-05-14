@@ -46,12 +46,8 @@ public class LoginDialogFragment extends DialogFragment implements DialogInterfa
                         entered_login.getText().toString(),
                         entered_password.getText().toString(),
                         (loginUser -> {
-                            /*
-                            Toast.makeText(getActivity(),
-                                    response.toString(),
-                                    Toast.LENGTH_LONG).show());*
-                             */
-                            if(userDao.getByLogin(loginUser.getLogin()) != null){
+                            User checkUser = userDao.getByLogin(loginUser.getLogin());
+                            if(checkUser != null){
                                 AuthUtils.deleteUser(loginUser, userDao);
                             }
                             else{

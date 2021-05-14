@@ -16,6 +16,7 @@ import com.faa.knowyourgame_new.dao.ThemeDao;
 import com.faa.knowyourgame_new.dao.UserDao;
 import com.faa.knowyourgame_new.db.AppDatabase;
 import com.faa.knowyourgame_new.dto.DbDto;
+import com.faa.knowyourgame_new.retrofit.utils.AuthUtils;
 import com.faa.knowyourgame_new.retrofit.utils.DbUtils;
 import com.faa.knowyourgame_new.ui.login_dialog.LoginDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -133,6 +134,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //new DownloadImageTask(imageView).execute(ApiUtils.BASE_SERVER_URL + "images/cat.jpg");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AuthUtils.logOut();
     }
 
     public static boolean hasConnection(final Context context)

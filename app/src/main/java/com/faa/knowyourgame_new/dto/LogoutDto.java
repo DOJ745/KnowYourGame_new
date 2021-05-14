@@ -9,5 +9,5 @@ import lombok.Data;
 @Data
 public class LogoutDto implements Serializable {
     @SerializedName("logout") @Expose
-    private int logoutStatus;
+    int logout;
 }
