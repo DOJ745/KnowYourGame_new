@@ -22,7 +22,7 @@ public interface AnswerDao {
     @Query("SELECT * FROM Answers")
     List<Answer> getAll();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Answer answer);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

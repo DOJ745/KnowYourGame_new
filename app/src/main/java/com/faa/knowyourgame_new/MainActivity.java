@@ -91,10 +91,10 @@ public class MainActivity extends AppCompatActivity {
 
         if(hasConnection(getApplicationContext())) {
 
-            DbUtils.getData((response) ->
+            /*DbUtils.getData((response) ->
                     Toast.makeText(this,
                             response.toString(),
-                            Toast.LENGTH_LONG).show());
+                            Toast.LENGTH_LONG).show());*/
 
             dbDto = new DbDto();
             DbUtils.getData((getDataResponse -> {

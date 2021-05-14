@@ -20,7 +20,7 @@ public interface QuestionDao {
     @Query("SELECT * FROM Question")
     List<Question> getAll();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Question question);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

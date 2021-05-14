@@ -24,6 +24,5 @@ public interface ServerService {
     @GET("/db/data")
     Call<DbDto> getData();
 
-    @GET("/test_request")
-    Call<UserDto> getCheckUser();
+    //@GET("/score")
 }

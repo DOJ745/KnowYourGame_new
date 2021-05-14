@@ -7,9 +7,12 @@ import androidx.room.PrimaryKey;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @EqualsAndHashCode
-@Data
+@Getter
+@Setter
 @Entity(tableName = "User")
 public class User {
 
@@ -17,8 +20,8 @@ public class User {
     String login;
     
     @ColumnInfo(name = "password")
-    String password; // create hash-func for password
+    String password;
 
     @ColumnInfo(name = "score")
-    Double score;
+    int score;
 }

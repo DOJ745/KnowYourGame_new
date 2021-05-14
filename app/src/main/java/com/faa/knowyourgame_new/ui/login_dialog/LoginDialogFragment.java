@@ -14,20 +14,20 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.faa.knowyourgame_new.R;
+import com.faa.knowyourgame_new.entity.User;
 import com.faa.knowyourgame_new.retrofit.utils.AuthUtils;
 
 import static com.faa.knowyourgame_new.MainActivity.hasConnection;
+import static com.faa.knowyourgame_new.MainActivity.userDao;
 
 public class LoginDialogFragment extends DialogFragment implements DialogInterface.OnClickListener {
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-        dialog.setCancelable(false);
 
         View view = getLayoutInflater().inflate(R.layout.login_dialog, null);
         dialog.setView(view);
-
 
         EditText entered_login = view.findViewById(R.id.editLogin);
         EditText entered_password = view.findViewById(R.id.editPassword);
@@ -36,6 +36,7 @@ public class LoginDialogFragment extends DialogFragment implements DialogInterfa
         Button sign_up = view.findViewById(R.id.button_sign_up);
 
         Dialog loginDialog = dialog.create();
+        loginDialog.setCanceledOnTouchOutside(false);
 
         sign_in.setOnClickListener(listener_in -> {
 
@@ -44,10 +45,21 @@ public class LoginDialogFragment extends DialogFragment implements DialogInterfa
                 AuthUtils.signIn(
                         entered_login.getText().toString(),
                         entered_password.getText().toString(),
-                        (response) ->
-                                Toast.makeText(getActivity(),
-                                        response.toString(),
-                                        Toast.LENGTH_LONG).show());
+                        (loginUser -> {
+                            /*
+                            Toast.makeText(getActivity(),
+                                    response.toString(),
+                                    Toast.LENGTH_LONG).show());*
+                             */
+                            if(userDao.getByLogin(loginUser.getLogin()) != null){
+                                AuthUtils.deleteUser(loginUser, userDao);
+                            }
+                            else{
+                                AuthUtils.addUser(loginUser, userDao);
+                            }
+                        }));
+
+
                 loginDialog.cancel();
             }
             else

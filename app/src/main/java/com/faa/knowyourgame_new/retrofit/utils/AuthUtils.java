@@ -2,11 +2,14 @@ package com.faa.knowyourgame_new.retrofit.utils;
 
 import android.util.Log;
 
+import com.faa.knowyourgame_new.dao.UserDao;
 import com.faa.knowyourgame_new.dto.LogoutDto;
 import com.faa.knowyourgame_new.dto.RegisterDto;
 import com.faa.knowyourgame_new.dto.UserDto;
+import com.faa.knowyourgame_new.entity.User;
 
 import org.jetbrains.annotations.NotNull;
+import org.modelmapper.ModelMapper;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -98,5 +101,21 @@ public class AuthUtils {
                 Log.e(TAG, "Error loading from API");
             }
         });
+    }
+
+
+    public static void addUser(UserDto userDto, UserDao userDao) {
+
+        ModelMapper modelMapper = new ModelMapper();
+
+        User loginUser = modelMapper.map(userDto, User.class);
+        userDao.insert(loginUser);
+    }
+
+    public static void deleteUser(UserDto userDto, UserDao userDao){
+        ModelMapper modelMapper = new ModelMapper();
+
+        User loginUser = modelMapper.map(userDto, User.class);
+        userDao.insert(loginUser);
     }
 }
