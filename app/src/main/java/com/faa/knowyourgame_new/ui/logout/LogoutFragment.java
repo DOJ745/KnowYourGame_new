@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,9 +23,14 @@ public class LogoutFragment extends Fragment {
         logoutViewModel = new ViewModelProvider(this).get(LogoutViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_logout, container, false);
+
         final TextView textView = root.findViewById(R.id.text_logout);
+        final Button button = root.findViewById(R.id.btn_logout);
+
+        button.setOnClickListener(listener -> this.getActivity().finish());
 
         logoutViewModel.getText().observe(getViewLifecycleOwner(), s -> textView.setText(s));
+        logoutViewModel.getLogoutText().observe(getViewLifecycleOwner(), text -> button.setText(text));
 
         return root;
     }

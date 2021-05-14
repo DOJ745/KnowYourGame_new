@@ -18,8 +18,8 @@ public interface ServerService {
     @POST("/sign_in")
     Call<UserDto> signIn(@Query("login") String login, @Query("password") String password);
 
-    @POST("/log_out")
-    Call<LogoutDto> logout();
+    @POST("/logout")
+    Call<LogoutDto> logOut();
 
     @GET("/db/data")
     Call<DbDto> getData();

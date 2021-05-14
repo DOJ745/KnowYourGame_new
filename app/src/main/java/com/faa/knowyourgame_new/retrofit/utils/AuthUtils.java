@@ -33,22 +33,22 @@ public class AuthUtils {
         void logout(String logoutResponse);
     }
 
-    public static void logOut(){
-        myService.logout().enqueue(new Callback<LogoutDto>() {
+    public static void logoutUser(LogoutCallBack logoutCallBack){
+        myService.logOut().enqueue(new Callback<LogoutDto>() {
 
             @Override
             public void onResponse(
                     @NotNull Call<LogoutDto> call,
                     @NotNull Response<LogoutDto> response) {
-                Log.d(TAG, "Logout user status: " + response.body());
-                //logoutCallBack.logout(String.valueOf(response.body().getLogout()));
+                Log.d(TAG, "Logout user status: " + response.body().getLogout());
+                logoutCallBack.logout(String.valueOf(response.body().getLogout()));
             }
 
             @Override
             public void onFailure(
                     @NotNull Call<LogoutDto> call,
                     @NotNull Throwable t) {
-                Log.e(TAG, "Error loading from API");
+                Log.e(TAG, "Error loading from API (Logout)");
             }
         });
     }

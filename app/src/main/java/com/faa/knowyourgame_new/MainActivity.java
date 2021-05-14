@@ -137,11 +137,22 @@ public class MainActivity extends AppCompatActivity {
         //new DownloadImageTask(imageView).execute(ApiUtils.BASE_SERVER_URL + "images/cat.jpg");
     }
 
+
+    @Override
+    public void onBackPressed() {
+        /*AuthUtils.logOut((logoutResponse ->
+                Toast.makeText(this, logoutResponse, Toast.LENGTH_LONG).show()));*/
+
+        finishAffinity();
+        super.onBackPressed();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "ON DESTROY");
-        AuthUtils.logOut();
+        AuthUtils.logoutUser((logoutResponse ->
+                Log.d(TAG, logoutResponse)));
     }
 
     public static boolean hasConnection(final Context context)
