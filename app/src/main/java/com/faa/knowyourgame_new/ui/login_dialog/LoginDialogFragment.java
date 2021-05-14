@@ -36,7 +36,7 @@ public class LoginDialogFragment extends DialogFragment implements DialogInterfa
         Button sign_up = view.findViewById(R.id.button_sign_up);
 
         Dialog loginDialog = dialog.create();
-        loginDialog.setCanceledOnTouchOutside(false);
+        //loginDialog.setCanceledOnTouchOutside(false);
 
         sign_in.setOnClickListener(listener_in -> {
 

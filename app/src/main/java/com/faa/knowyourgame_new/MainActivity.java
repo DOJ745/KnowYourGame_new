@@ -62,8 +62,6 @@ public class MainActivity extends AppCompatActivity {
         int firstLaunch = configuration.getInt("FIRST_LAUNCH", 0);
 
         // Initializing database
-        /*db =  Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "main_db").build();*/
         db =  Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "main_db")
                 .allowMainThreadQueries()
@@ -92,11 +90,6 @@ public class MainActivity extends AppCompatActivity {
         loginDialogFragment.show(getSupportFragmentManager(), "LOGIN_DIALOG");
 
         if(hasConnection(getApplicationContext())) {
-
-            /*DbUtils.getData((response) ->
-                    Toast.makeText(this,
-                            response.toString(),
-                            Toast.LENGTH_LONG).show());*/
 
             dbDto = new DbDto();
             DbUtils.getData((getDataResponse -> {
@@ -140,8 +133,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        /*AuthUtils.logOut((logoutResponse ->
-                Toast.makeText(this, logoutResponse, Toast.LENGTH_LONG).show()));*/
+        AuthUtils.logoutUser((logoutResponse ->
+                Toast.makeText(this, logoutResponse, Toast.LENGTH_LONG).show()));
 
         finishAffinity();
         super.onBackPressed();
@@ -151,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "ON DESTROY");
+        db.close();
         AuthUtils.logoutUser((logoutResponse ->
                 Log.d(TAG, logoutResponse)));
     }
