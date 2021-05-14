@@ -20,6 +20,9 @@ public interface QuestionDao {
     @Query("SELECT * FROM Question")
     List<Question> getAll();
 
+    @Query("SELECT * FROM Question WHERE difficulty_id = :diff_id")
+    List<Question> getQuestionsByDiffId(long diff_id);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Question question);
 

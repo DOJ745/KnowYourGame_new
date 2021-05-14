@@ -8,6 +8,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.faa.knowyourgame_new.entity.Answer;
+import com.faa.knowyourgame_new.entity.Question;
 import com.faa.knowyourgame_new.entity.Theme;
 
 import java.util.ArrayList;
@@ -21,6 +22,9 @@ public interface AnswerDao {
 
     @Query("SELECT * FROM Answers")
     List<Answer> getAll();
+
+    @Query("SELECT * FROM Answers WHERE question_id = :questionId")
+    List<Question> getAnswersForQuestion(long questionId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Answer answer);

@@ -39,40 +39,40 @@
         android:textColor="@color/black"
         android:textSize="21sp"
 
-        app:layout_constraintBottom_toTopOf="@id/answer_var_one"
+        app:layout_constraintBottom_toTopOf="@id/btn_answer_var_one"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/question_image" />
 
     <Button
-        android:id="@+id/answer_var_one"
+        android:id="@+id/btn_answer_var_one"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
 
-        app:layout_constraintBottom_toTopOf="@id/answer_var_two"
+        app:layout_constraintBottom_toTopOf="@id/btn_answer_var_two"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chosen_answer" />
 
     <Button
-        android:id="@+id/answer_var_two"
+        android:id="@+id/btn_answer_var_two"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
 
-        app:layout_constraintBottom_toTopOf="@id/answer_var_three"
+        app:layout_constraintBottom_toTopOf="@id/btn_answer_var_three"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/answer_var_one" />
+        app:layout_constraintTop_toBottomOf="@id/btn_answer_var_one" />
 
     <Button
-        android:id="@+id/answer_var_three"
+        android:id="@+id/btn_answer_var_three"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/answer_var_two" />
+        app:layout_constraintTop_toBottomOf="@id/btn_answer_var_two" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
