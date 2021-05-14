@@ -10,7 +10,10 @@ public class InfoViewModel extends ViewModel {
 
     public InfoViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is info fragment");
+        mText.setValue("How to play this game:\n" +
+                "1) Choose difficulty\n" +
+                "2)Answer on questions\n" +
+                "3) Try to get higher rating!");
     }
 
     public LiveData<String> getText() {
