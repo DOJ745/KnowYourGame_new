@@ -22,6 +22,7 @@
     <string name="text_btn_play">Play</string>
     <string name="text_close">Close</string>
     <string name="text_choose_difficulty">Choose difficulty</string>
+    <string name="text_answer">Answer</string>
 
     <string name="enter_message">Identify yourself!</string>
 </resources>

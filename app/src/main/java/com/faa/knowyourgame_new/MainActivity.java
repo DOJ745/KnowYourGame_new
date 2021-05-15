@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -30,12 +31,15 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.room.Room;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
 
 
     private DialogFragment loginDialogFragment = new LoginDialogFragment();
     private static final String TAG = "MainActivity";
     private static final String PREFS_FILE = "Config";
+
     public static AppDatabase db;
 
     public static ThemeDao themeDao;
@@ -49,12 +53,16 @@ public class MainActivity extends AppCompatActivity {
     public static SharedPreferences configuration;
     public static SharedPreferences.Editor configEditor;
 
+    public static File IMAGE_PATH;
+
     //private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        IMAGE_PATH = this.getFilesDir();
 
         configuration = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
         configEditor = configuration.edit();
@@ -86,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         NavigationUI.setupWithNavController(navView, navController);
+
+        Log.d(TAG, IMAGE_PATH.getPath());
 
         loginDialogFragment.show(getSupportFragmentManager(), "LOGIN_DIALOG");
 

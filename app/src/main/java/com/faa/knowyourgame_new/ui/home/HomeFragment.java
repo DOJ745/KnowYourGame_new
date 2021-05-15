@@ -29,6 +29,7 @@ import com.faa.knowyourgame_new.ui.question_dialog.QuestionDialogFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.faa.knowyourgame_new.MainActivity.IMAGE_PATH;
 import static com.faa.knowyourgame_new.MainActivity.difficultyDao;
 import static com.faa.knowyourgame_new.MainActivity.leagueDao;
 import static com.faa.knowyourgame_new.MainActivity.questionDao;
@@ -64,19 +65,24 @@ public class HomeFragment extends Fragment {
             String leagueImgName = leagueDao.getLeagueImg("Bronze");
             Log.d(TAG, leagueImgName);
 
-            new DownloadImageTask(leagueIcon, leagueImgName).execute(
-                    ApiUtils.BASE_SERVER_LEAGUE_IMAGE_DIR + leagueImgName);
+            /*new DownloadImageTask(leagueIcon, leagueImgName, IMAGE_PATH).execute(
+                    ApiUtils.BASE_SERVER_LEAGUE_IMAGE_DIR + leagueImgName);*/
+
+            new DownloadImageTask(leagueIcon,
+                    ApiUtils.BASE_SERVER_QUESTION_IMAGE_DIR +
+                            questionDao.getQuestionsByDiffId(0).get(0).getImage(),
+                    IMAGE_PATH);
         }
         if(userDao.getUserScore(LoginUserName) >= 101 && userDao.getUserScore(LoginUserName) <= 150){
             String leagueImgName = leagueDao.getLeagueImg("Silver");
 
-            new DownloadImageTask(leagueIcon, leagueImgName).execute(
+            new DownloadImageTask(leagueIcon, leagueImgName, IMAGE_PATH).execute(
                     ApiUtils.BASE_SERVER_LEAGUE_IMAGE_DIR + leagueImgName);
         }
         if(userDao.getUserScore(LoginUserName) >= 151){
             String leagueImgName = leagueDao.getLeagueImg("Gold");
 
-            new DownloadImageTask(leagueIcon, leagueImgName).execute(
+            new DownloadImageTask(leagueIcon, leagueImgName, IMAGE_PATH).execute(
                     ApiUtils.BASE_SERVER_LEAGUE_IMAGE_DIR + leagueImgName);
         }
 

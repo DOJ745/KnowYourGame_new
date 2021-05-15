@@ -29,6 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.faa.knowyourgame_new.MainActivity.IMAGE_PATH;
 import static com.faa.knowyourgame_new.retrofit.RetrofitClient.myService;
 
 public class DbUtils {
@@ -45,7 +46,6 @@ public class DbUtils {
             public void onResponse(
                     @NotNull Call<DbDto> call,
                     @NotNull Response<DbDto> response) {
-                //Log.d(TAG, "DATA FROM SERVER: " + response.body());
                 dbCallBack.dbData(response.body());
             }
 
@@ -86,6 +86,13 @@ public class DbUtils {
         leagueDao.insertMany(serverLeagues);
         questionDao.insertMany(serverQuestions);
         answerDao.insertMany(serverAnswers);
+
+        for(Question _question: serverQuestions){
+            new DownloadImageTask(null,
+                    ApiUtils.BASE_SERVER_QUESTION_IMAGE_DIR + _question.getImage(),
+                    IMAGE_PATH);
+        }
+
     }
 
     public static void checkForUpdates(
@@ -216,6 +223,12 @@ public class DbUtils {
             List<League> dbLeagues,
             List<Question> dbQuestions,
             List<Answer> dbAnswers){
+
+        for(Question _serverQuestion : serverQuestions) {
+            new DownloadImageTask(null,
+                    ApiUtils.BASE_SERVER_QUESTION_IMAGE_DIR + _serverQuestion.getImage(),
+                    IMAGE_PATH);
+        }
 
         for(Theme _serverTheme : serverThemes) {
             if(dbThemes.contains(_serverTheme)) {
