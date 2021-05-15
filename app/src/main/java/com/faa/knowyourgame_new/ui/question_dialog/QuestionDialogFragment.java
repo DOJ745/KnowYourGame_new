@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +12,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.faa.knowyourgame_new.R;
+import com.faa.knowyourgame_new.entity.Question;
+
+import java.util.List;
+
+import static com.faa.knowyourgame_new.MainActivity.themeDao;
+import static com.faa.knowyourgame_new.ui.home.HomeFragment.ChosenQuestions;
 
 public class QuestionDialogFragment extends DialogFragment implements DialogInterface.OnClickListener {
 
@@ -33,6 +38,9 @@ public class QuestionDialogFragment extends DialogFragment implements DialogInte
         Button answer_var_three = view.findViewById(R.id.btn_answer_var_three);
 
         Dialog questionDialog = dialog.create();
+
+        List<Question> QUESTIONS = ChosenQuestions;
+        themeText.setText(themeDao.getNameById(QUESTIONS.get(0).getTheme_id()));
 
         return questionDialog;
     }

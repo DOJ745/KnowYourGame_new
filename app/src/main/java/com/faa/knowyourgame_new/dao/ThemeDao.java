@@ -22,6 +22,9 @@ public interface ThemeDao {
     @Query("SELECT * FROM Theme")
     List<Theme> getAll();
 
+    @Query("SELECT name FROM Theme WHERE _id = :id")
+    String getNameById(long id);
+
     @Insert
     void insert(Theme theme);
 

@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.faa.knowyourgame_new.R;
 import com.faa.knowyourgame_new.entity.Difficulty;
+import com.faa.knowyourgame_new.entity.Question;
 import com.faa.knowyourgame_new.retrofit.utils.ApiUtils;
 import com.faa.knowyourgame_new.retrofit.utils.DownloadImageTask;
 import com.faa.knowyourgame_new.ui.question_dialog.QuestionDialogFragment;
@@ -30,6 +31,7 @@ import java.util.List;
 
 import static com.faa.knowyourgame_new.MainActivity.difficultyDao;
 import static com.faa.knowyourgame_new.MainActivity.leagueDao;
+import static com.faa.knowyourgame_new.MainActivity.questionDao;
 import static com.faa.knowyourgame_new.MainActivity.userDao;
 import static com.faa.knowyourgame_new.ui.login_dialog.LoginDialogFragment.LoginUserName;
 
@@ -38,7 +40,9 @@ public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
     private DialogFragment questionDialogFragment = new QuestionDialogFragment();
     private HomeViewModel homeViewModel;
+
     private static int ChosenDif;
+    public static List<Question> ChosenQuestions;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -102,6 +106,8 @@ public class HomeFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
                 ChosenDif = difficultyDao.getIdByName(item);
+
+                ChosenQuestions = questionDao.getQuestionsByDiffId(ChosenDif);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
