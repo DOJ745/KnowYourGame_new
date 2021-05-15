@@ -65,25 +65,22 @@ public class HomeFragment extends Fragment {
             String leagueImgName = leagueDao.getLeagueImg("Bronze");
             Log.d(TAG, leagueImgName);
 
-            /*new DownloadImageTask(leagueIcon, leagueImgName, IMAGE_PATH).execute(
-                    ApiUtils.BASE_SERVER_LEAGUE_IMAGE_DIR + leagueImgName);*/
-
-            new DownloadImageTask(leagueIcon,
+            /*new DownloadImageTask(leagueIcon,
                     ApiUtils.BASE_SERVER_QUESTION_IMAGE_DIR +
                             questionDao.getQuestionsByDiffId(0).get(0).getImage(),
-                    IMAGE_PATH);
+                    IMAGE_PATH).execute();*/
         }
         if(userDao.getUserScore(LoginUserName) >= 101 && userDao.getUserScore(LoginUserName) <= 150){
             String leagueImgName = leagueDao.getLeagueImg("Silver");
 
-            new DownloadImageTask(leagueIcon, leagueImgName, IMAGE_PATH).execute(
-                    ApiUtils.BASE_SERVER_LEAGUE_IMAGE_DIR + leagueImgName);
+            /*new DownloadImageTask(leagueIcon, leagueImgName, IMAGE_PATH).execute(
+                    ApiUtils.BASE_SERVER_LEAGUE_IMAGE_DIR + leagueImgName);*/
         }
         if(userDao.getUserScore(LoginUserName) >= 151){
             String leagueImgName = leagueDao.getLeagueImg("Gold");
 
-            new DownloadImageTask(leagueIcon, leagueImgName, IMAGE_PATH).execute(
-                    ApiUtils.BASE_SERVER_LEAGUE_IMAGE_DIR + leagueImgName);
+            /*new DownloadImageTask(leagueIcon, leagueImgName, IMAGE_PATH).execute(
+                    ApiUtils.BASE_SERVER_LEAGUE_IMAGE_DIR + leagueImgName);*/
         }
 
 

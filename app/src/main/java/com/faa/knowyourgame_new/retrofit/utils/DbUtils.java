@@ -30,6 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.faa.knowyourgame_new.MainActivity.IMAGE_PATH;
+import static com.faa.knowyourgame_new.MainActivity.questionDao;
 import static com.faa.knowyourgame_new.retrofit.RetrofitClient.myService;
 
 public class DbUtils {
@@ -87,12 +88,17 @@ public class DbUtils {
         questionDao.insertMany(serverQuestions);
         answerDao.insertMany(serverAnswers);
 
-        for(Question _question: serverQuestions){
-            new DownloadImageTask(null,
-                    ApiUtils.BASE_SERVER_QUESTION_IMAGE_DIR + _question.getImage(),
-                    IMAGE_PATH);
+        for(League _serverLeague : serverLeagues) {
+            new DownloadImageTask(
+                    _serverLeague.getImage(),
+                    IMAGE_PATH).execute(ApiUtils.BASE_SERVER_LEAGUE_IMAGE_DIR + _serverLeague.getImage());
         }
 
+        for(Question _serverQuestion : serverQuestions) {
+            new DownloadImageTask(
+                    _serverQuestion.getImage(),
+                    IMAGE_PATH).execute(ApiUtils.BASE_SERVER_QUESTION_IMAGE_DIR + _serverQuestion.getImage());
+        }
     }
 
     public static void checkForUpdates(
@@ -225,9 +231,15 @@ public class DbUtils {
             List<Answer> dbAnswers){
 
         for(Question _serverQuestion : serverQuestions) {
-            new DownloadImageTask(null,
-                    ApiUtils.BASE_SERVER_QUESTION_IMAGE_DIR + _serverQuestion.getImage(),
-                    IMAGE_PATH);
+            new DownloadImageTask(
+                    _serverQuestion.getImage(),
+                    IMAGE_PATH).execute(ApiUtils.BASE_SERVER_QUESTION_IMAGE_DIR + _serverQuestion.getImage());
+        }
+
+        for(League _serverLeague : serverLeagues) {
+            new DownloadImageTask(
+                    _serverLeague.getImage(),
+                    IMAGE_PATH).execute(ApiUtils.BASE_SERVER_LEAGUE_IMAGE_DIR + _serverLeague.getImage());
         }
 
         for(Theme _serverTheme : serverThemes) {

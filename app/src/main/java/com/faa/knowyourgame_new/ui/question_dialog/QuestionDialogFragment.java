@@ -59,8 +59,6 @@ public class QuestionDialogFragment extends DialogFragment implements DialogInte
         answer_var_two.setText(ANSWERS.get(1).getText());
         answer_var_three.setText(ANSWERS.get(2).getText());
 
-        questionDialog
-
         CountDownTimer answerTimer = new CountDownTimer(30000, 1000) {
             public void onTick(long millisUntilFinished) {
                 timerCountdown.setText("Time left: " + millisUntilFinished / 1000);

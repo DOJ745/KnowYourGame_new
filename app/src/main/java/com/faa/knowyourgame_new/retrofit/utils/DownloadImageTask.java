@@ -14,13 +14,11 @@ import java.io.InputStream;
 
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
-    ImageView imageView;
     String imgName;
     File storagePath;
 
-    public DownloadImageTask(ImageView _imageView, String _imgName, File _storagePath) {
+    public DownloadImageTask(String _imgName, File _storagePath) {
 
-        this.imageView = _imageView;
         this.imgName = _imgName;
         this.storagePath = _storagePath;
     }
@@ -59,6 +57,6 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap result) {
-        imageView.setImageBitmap(result);
+        Log.e("IMAGE", "Image downloaded!");
     }
 }

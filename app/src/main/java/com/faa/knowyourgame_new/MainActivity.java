@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
             }));
 
             firstLaunch += 1;
+
             configEditor.remove("FIRST_LAUNCH");
             configEditor.apply();
 
@@ -146,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
         AuthUtils.logoutUser((logoutResponse ->
                 Toast.makeText(this, logoutResponse, Toast.LENGTH_LONG).show()));
 
+
         finishAffinity();
         super.onBackPressed();
     }
@@ -157,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
         db.close();
         AuthUtils.logoutUser((logoutResponse ->
                 Log.d(TAG, logoutResponse)));
+
     }
 
     public static boolean hasConnection(final Context context)
