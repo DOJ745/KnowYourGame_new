@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -42,6 +43,12 @@ public class HomeFragment extends Fragment {
         final TextView textView = root.findViewById(R.id.text_home);
         final Spinner spinner = root.findViewById(R.id.difficulty_spinner);
         final Button playButton = root.findViewById(R.id.btn_play);
+
+        final ImageView ratingIcon = root.findViewById(R.id.rating_icon);
+        final ImageView leagueIcon = root.findViewById(R.id.league_icon);
+
+        ratingIcon.setOnClickListener(listener ->
+                questionDialogFragment.show(this.getParentFragmentManager(), "TEST_DIALOG"));
 
         playButton.setOnClickListener(listener ->
                 questionDialogFragment.show(this.getParentFragmentManager(), "QUESTION_DIALOG")

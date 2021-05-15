@@ -24,7 +24,7 @@ public interface AnswerDao {
     List<Answer> getAll();
 
     @Query("SELECT * FROM Answers WHERE question_id = :questionId")
-    List<Question> getAnswersForQuestion(long questionId);
+    List<Answer> getAnswersForQuestion(long questionId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Answer answer);
