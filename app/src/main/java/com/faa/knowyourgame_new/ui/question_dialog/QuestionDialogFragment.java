@@ -47,6 +47,7 @@ public class QuestionDialogFragment extends DialogFragment implements DialogInte
         TextView themeText = view.findViewById(R.id.theme_text);
         TextView chosenAnswer = view.findViewById(R.id.chosen_answer);
         TextView timerCountdown = view.findViewById(R.id.countdown);
+        TextView questionText = view.findViewById(R.id.question_text);
 
         ImageView questionImage = view.findViewById(R.id.question_image);
 
@@ -59,11 +60,13 @@ public class QuestionDialogFragment extends DialogFragment implements DialogInte
 
         List<Question> QUESTIONS = ChosenQuestions;
         List<Answer> ANSWERS;
+
         themeText.setText(themeDao.getNameById(QUESTIONS.get(0).getTheme_id()));
 
         ANSWERS = answerDao.getAnswersForQuestion(QUESTIONS.get(0).get_id());
 
         questionImage.setImageDrawable(Drawable.createFromPath(IMAGE_PATH + "/" + QUESTIONS.get(0).getImage()));
+        questionText.setText(QUESTIONS.get(0).getText());
 
         answer_var_one.setText(ANSWERS.get(0).getText());
         answer_var_two.setText(ANSWERS.get(1).getText());
