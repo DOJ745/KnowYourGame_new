@@ -1,5 +1,6 @@
 package com.faa.knowyourgame_new.ui.home;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,30 +60,7 @@ public class HomeFragment extends Fragment {
         ImageView ratingIcon = root.findViewById(R.id.rating_icon);
         ImageView leagueIcon = root.findViewById(R.id.league_icon);
 
-
-        if(userDao.getUserScore(LoginUserName) >= 0 && userDao.getUserScore(LoginUserName) <= 100) {
-
-            String leagueImgName = leagueDao.getLeagueImg("Bronze");
-            Log.d(TAG, leagueImgName);
-
-            /*new DownloadImageTask(leagueIcon,
-                    ApiUtils.BASE_SERVER_QUESTION_IMAGE_DIR +
-                            questionDao.getQuestionsByDiffId(0).get(0).getImage(),
-                    IMAGE_PATH).execute();*/
-        }
-        if(userDao.getUserScore(LoginUserName) >= 101 && userDao.getUserScore(LoginUserName) <= 150){
-            String leagueImgName = leagueDao.getLeagueImg("Silver");
-
-            /*new DownloadImageTask(leagueIcon, leagueImgName, IMAGE_PATH).execute(
-                    ApiUtils.BASE_SERVER_LEAGUE_IMAGE_DIR + leagueImgName);*/
-        }
-        if(userDao.getUserScore(LoginUserName) >= 151){
-            String leagueImgName = leagueDao.getLeagueImg("Gold");
-
-            /*new DownloadImageTask(leagueIcon, leagueImgName, IMAGE_PATH).execute(
-                    ApiUtils.BASE_SERVER_LEAGUE_IMAGE_DIR + leagueImgName);*/
-        }
-
+        loadLeagueImg(leagueIcon);
 
         ratingIcon.setOnClickListener(listener ->
                 questionDialogFragment.show(this.getParentFragmentManager(), "TEST_DIALOG"));
@@ -128,5 +106,21 @@ public class HomeFragment extends Fragment {
         });
 
         return root;
+    }
+
+    private static void loadLeagueImg(ImageView _leagueIcon){
+
+        if(userDao.getUserScore(LoginUserName) >= 0 && userDao.getUserScore(LoginUserName) <= 100) {
+            String leagueImgName = leagueDao.getLeagueImg("Bronze");
+            _leagueIcon.setImageDrawable(Drawable.createFromPath(IMAGE_PATH + "/" + leagueImgName));
+        }
+        if(userDao.getUserScore(LoginUserName) >= 101 && userDao.getUserScore(LoginUserName) <= 150){
+            String leagueImgName = leagueDao.getLeagueImg("Silver");
+            _leagueIcon.setImageDrawable(Drawable.createFromPath(IMAGE_PATH + "/" + leagueImgName));
+        }
+        if(userDao.getUserScore(LoginUserName) >= 151){
+            String leagueImgName = leagueDao.getLeagueImg("Gold");
+            _leagueIcon.setImageDrawable(Drawable.createFromPath(IMAGE_PATH + "/" + leagueImgName));
+        }
     }
 }

@@ -2,9 +2,12 @@ package com.faa.knowyourgame_new.ui.login_dialog;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +19,11 @@ import androidx.fragment.app.DialogFragment;
 import com.faa.knowyourgame_new.R;
 import com.faa.knowyourgame_new.entity.User;
 import com.faa.knowyourgame_new.retrofit.utils.AuthUtils;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import static com.faa.knowyourgame_new.MainActivity.hasConnection;
 import static com.faa.knowyourgame_new.MainActivity.userDao;
@@ -120,6 +128,7 @@ public class LoginDialogFragment extends DialogFragment implements DialogInterfa
 
         return loginDialog;
     }
+
 
     @Override
     public void onClick(DialogInterface dialog, int which) { }
