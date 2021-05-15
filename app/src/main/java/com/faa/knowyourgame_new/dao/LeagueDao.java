@@ -20,7 +20,10 @@ public interface LeagueDao {
     @Query("SELECT * FROM League")
     List<League> getAll();
 
-    @Insert
+    @Query("SELECT image FROM League WHERE name =:name")
+    String getLeagueImg(String name);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(League league);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

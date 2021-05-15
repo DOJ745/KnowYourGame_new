@@ -45,7 +45,7 @@ public class DbUtils {
             public void onResponse(
                     @NotNull Call<DbDto> call,
                     @NotNull Response<DbDto> response) {
-                Log.d(TAG, "DATA FROM SERVER: " + response.body());
+                //Log.d(TAG, "DATA FROM SERVER: " + response.body());
                 dbCallBack.dbData(response.body());
             }
 

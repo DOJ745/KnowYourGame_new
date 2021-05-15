@@ -15,14 +15,18 @@ import java.io.InputStream;
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
     ImageView imageView;
+    String imgName;
 
-    public DownloadImageTask(ImageView _imageView) {
+    public DownloadImageTask(ImageView _imageView, String _imgName) {
+
         this.imageView = _imageView;
+        this.imgName = _imgName;
     }
 
     protected Bitmap doInBackground(String... urls) {
 
         String urlDisplay = urls[0];
+        String savePath = "";
         Bitmap loadedImage = null;
         boolean success = false;
 
@@ -31,28 +35,29 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             loadedImage = BitmapFactory.decodeStream(in);
 
             File sdCardDirectory = Environment.getExternalStorageDirectory();
+
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
                 sdCardDirectory = Environment.getStorageDirectory();
             }
-            File savedImage = new File(sdCardDirectory, "test.png");
 
-            // Encode the file as a PNG image.
+            File savedImage = new File(sdCardDirectory, "/images/" + imgName);
+            savePath = savedImage.getPath();
+
+            // Encode the file as a JPEG image.
             FileOutputStream outStream;
 
             outStream = new FileOutputStream(savedImage);
-            loadedImage.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+            loadedImage.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
             /* 100 to keep full quality of the image */
 
             outStream.flush();
             outStream.close();
             success = true;
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        catch (IOException e) { e.printStackTrace(); }
 
-        if (success) { Log.d("IMAGE", "Image saved!"); }
-        else { Log.d("IMAGE", "Error during image saving!"); }
+        if (success) { Log.d("IMAGE", "Image saved to " + savePath); }
+        else { Log.e("IMAGE", "Error during image saving!"); }
 
         return loadedImage;
     }

@@ -22,6 +22,9 @@ public interface DifficultyDao {
     @Query("SELECT * FROM Difficulty")
     List<Difficulty> getAll();
 
+    @Query("SELECT _id FROM DIFFICULTY where name = :name")
+    int getIdByName(String name);
+
     @Insert
     void insert(Difficulty difficulty);
 

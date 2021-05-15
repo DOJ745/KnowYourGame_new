@@ -22,6 +22,8 @@ import static com.faa.knowyourgame_new.MainActivity.userDao;
 
 public class LoginDialogFragment extends DialogFragment implements DialogInterface.OnClickListener {
 
+    public static String LoginUserName;
+
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
@@ -55,7 +57,7 @@ public class LoginDialogFragment extends DialogFragment implements DialogInterfa
                             }
                         }));
 
-
+                LoginUserName = entered_login.getText().toString();
                 loginDialog.cancel();
             }
             else
