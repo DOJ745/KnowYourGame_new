@@ -19,6 +19,7 @@ import com.faa.knowyourgame_new.dao.ThemeDao;
 import com.faa.knowyourgame_new.dao.UserDao;
 import com.faa.knowyourgame_new.db.AppDatabase;
 import com.faa.knowyourgame_new.dto.DbDto;
+import com.faa.knowyourgame_new.entity.Logs;
 import com.faa.knowyourgame_new.retrofit.utils.AuthUtils;
 import com.faa.knowyourgame_new.retrofit.utils.DbUtils;
 import com.faa.knowyourgame_new.ui.login_dialog.LoginDialogFragment;
@@ -164,6 +165,9 @@ public class MainActivity extends AppCompatActivity {
 
         if(hasConnection(getApplicationContext())) {
             AuthUtils.updateUserData(userDao);
+
+            for(Logs elem: logsDao.getLogs())
+            DbUtils.sendLog(elem);
         }
 
         db.close();

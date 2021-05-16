@@ -2,6 +2,7 @@ package com.faa.knowyourgame_new.retrofit;
 
 import com.faa.knowyourgame_new.dto.DbDto;
 import com.faa.knowyourgame_new.dto.LogoutDto;
+import com.faa.knowyourgame_new.dto.LogsDto;
 import com.faa.knowyourgame_new.dto.RatingDto;
 import com.faa.knowyourgame_new.dto.RegisterDto;
 import com.faa.knowyourgame_new.dto.UserDto;
@@ -33,5 +34,10 @@ public interface ServerService {
     @GET("/db/rating")
     Call<RatingDto> getRating();
 
-    //@GET("/score")
+    @POST("/db/add/log")
+    Call<LogsDto> sendLogs(
+            @Query("login") String login,
+            @Query("answerStatus") int answerStatus,
+            @Query("points") int points,
+            @Query("date") String date);
 }

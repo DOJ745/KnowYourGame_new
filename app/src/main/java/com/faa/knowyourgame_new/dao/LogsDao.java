@@ -15,6 +15,7 @@ public interface LogsDao {
     @Query("SELECT * FROM Logs")
     List<Logs> getLogs();
 
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Logs logs);
 }

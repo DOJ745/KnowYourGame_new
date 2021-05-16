@@ -23,7 +23,7 @@ public class Logs {
     int answerStatus;
 
     @ColumnInfo(name = "points")
-    double points;
+    int points;
 
     @ColumnInfo(name = "date_time")
     String dateTime;

@@ -11,6 +11,7 @@ import com.faa.knowyourgame_new.dto.AnswersDto;
 import com.faa.knowyourgame_new.dto.DbDto;
 import com.faa.knowyourgame_new.dto.DifficultyDto;
 import com.faa.knowyourgame_new.dto.LeagueDto;
+import com.faa.knowyourgame_new.dto.LogsDto;
 import com.faa.knowyourgame_new.dto.QuestionDto;
 import com.faa.knowyourgame_new.dto.RatingDto;
 import com.faa.knowyourgame_new.dto.ThemeDto;
@@ -18,6 +19,7 @@ import com.faa.knowyourgame_new.dto.UserDto;
 import com.faa.knowyourgame_new.entity.Answer;
 import com.faa.knowyourgame_new.entity.Difficulty;
 import com.faa.knowyourgame_new.entity.League;
+import com.faa.knowyourgame_new.entity.Logs;
 import com.faa.knowyourgame_new.entity.Question;
 import com.faa.knowyourgame_new.entity.Theme;
 
@@ -45,6 +47,29 @@ public class DbUtils {
 
     public interface RatingCallback<T>{
         void rating(RatingDto getRatingResponse);
+    }
+
+    public static void sendLog(Logs log) {
+        myService.sendLogs(
+                log.getLogin(),
+                log.getAnswerStatus(),
+                log.getPoints(),
+                log.getDateTime()
+        ).enqueue(new Callback<LogsDto>() {
+            @Override
+            public void onResponse(
+                    @NotNull Call<LogsDto> call,
+                    @NotNull Response<LogsDto> response) {
+
+            }
+
+            @Override
+            public void onFailure(
+                    @NotNull Call<LogsDto> call,
+                    @NotNull Throwable t) {
+                Log.e(TAG, "Error loading from API (LOGS)");
+            }
+        });
     }
 
     public static void getRating(RatingCallback ratingCallback){
