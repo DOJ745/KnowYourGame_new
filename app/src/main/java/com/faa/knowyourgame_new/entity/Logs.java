@@ -13,7 +13,10 @@ import lombok.Setter;
 @Entity(tableName = "Logs")
 public class Logs {
 
-    @PrimaryKey@NonNull
+    @PrimaryKey(autoGenerate = true)@NonNull
+    int id;
+
+    @ColumnInfo(name = "login")
     String login;
 
     @ColumnInfo(name = "answer_status")

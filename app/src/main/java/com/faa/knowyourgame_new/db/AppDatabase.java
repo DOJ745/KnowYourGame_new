@@ -6,6 +6,7 @@ import androidx.room.RoomDatabase;
 import com.faa.knowyourgame_new.dao.AnswerDao;
 import com.faa.knowyourgame_new.dao.DifficultyDao;
 import com.faa.knowyourgame_new.dao.LeagueDao;
+import com.faa.knowyourgame_new.dao.LogsDao;
 import com.faa.knowyourgame_new.dao.QuestionDao;
 import com.faa.knowyourgame_new.dao.ThemeDao;
 import com.faa.knowyourgame_new.dao.UserDao;
@@ -34,4 +35,5 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract AnswerDao answerDao();
     public abstract LeagueDao leagueDao();
     public abstract DifficultyDao difficultyDao();
+    public abstract LogsDao logsDao();
 }

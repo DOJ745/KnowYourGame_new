@@ -10,5 +10,5 @@ public class LogsDto implements Serializable {
     String login;
     int answer_status;
     double points;
-    Date date;
+    String date;
 }

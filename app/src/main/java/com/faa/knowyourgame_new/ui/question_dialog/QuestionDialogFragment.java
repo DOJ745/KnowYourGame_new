@@ -15,15 +15,21 @@ import androidx.fragment.app.DialogFragment;
 
 import com.faa.knowyourgame_new.R;
 import com.faa.knowyourgame_new.entity.Answer;
+import com.faa.knowyourgame_new.entity.Logs;
 import com.faa.knowyourgame_new.entity.Question;
 import com.faa.knowyourgame_new.entity.User;
 import com.faa.knowyourgame_new.ui.answer_status_dialog.AnswerStatusDialogFragment;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static com.faa.knowyourgame_new.MainActivity.IMAGE_PATH;
 import static com.faa.knowyourgame_new.MainActivity.answerDao;
 import static com.faa.knowyourgame_new.MainActivity.difficultyDao;
+import static com.faa.knowyourgame_new.MainActivity.logsDao;
 import static com.faa.knowyourgame_new.MainActivity.themeDao;
 import static com.faa.knowyourgame_new.MainActivity.userDao;
 import static com.faa.knowyourgame_new.ui.home.HomeFragment.AnswerTrueness;
@@ -137,6 +143,18 @@ public class QuestionDialogFragment extends DialogFragment implements DialogInte
             currentUser.setScore(currentUser.getScore() + pointsToScore);
             userDao.update(currentUser);
         }
+
+        Date currentDate = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        String dateText = dateFormat.format(currentDate);
+
+        Logs userLog = new Logs();
+        userLog.setAnswerStatus(AnswerTrueness);
+        userLog.setLogin(currentUser.getLogin());
+        userLog.setPoints(pointsToScore);
+        userLog.setDateTime(dateText);
+
+        logsDao.insert(userLog);
 
         CurrentQuestion++;
     }

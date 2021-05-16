@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.faa.knowyourgame_new.dao.AnswerDao;
 import com.faa.knowyourgame_new.dao.DifficultyDao;
 import com.faa.knowyourgame_new.dao.LeagueDao;
+import com.faa.knowyourgame_new.dao.LogsDao;
 import com.faa.knowyourgame_new.dao.QuestionDao;
 import com.faa.knowyourgame_new.dao.ThemeDao;
 import com.faa.knowyourgame_new.dao.UserDao;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     public static AnswerDao answerDao;
     public static LeagueDao leagueDao;
     public static UserDao userDao;
+    public static LogsDao logsDao;
 
     public static DbDto dbDto;
     public static SharedPreferences configuration;
@@ -184,5 +186,6 @@ public class MainActivity extends AppCompatActivity {
         answerDao = _db.answerDao();
         leagueDao = _db.leagueDao();
         userDao = _db.userDao();
+        logsDao = _db.logsDao();
     }
 }
