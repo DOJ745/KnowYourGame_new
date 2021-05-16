@@ -128,10 +128,6 @@ public class AuthUtils {
         ModelMapper modelMapper = new ModelMapper();
 
         User loginUser = modelMapper.map(userDto, User.class);
-        /*User localUser = userDao.getCurrentUser();
-        if(localUser.getScore() != loginUser.getScore()){
-            loginUser.setScore(localUser.getScore());
-        }*/
         userDao.insert(loginUser);
     }
 
@@ -139,10 +135,6 @@ public class AuthUtils {
         ModelMapper modelMapper = new ModelMapper();
 
         User loginUser = modelMapper.map(userDto, User.class);
-        /*User localUser = userDao.getCurrentUser();
-        if(localUser.getScore() != loginUser.getScore()){
-            loginUser.setScore(localUser.getScore());
-        }*/
         userDao.update(loginUser);
     }
 

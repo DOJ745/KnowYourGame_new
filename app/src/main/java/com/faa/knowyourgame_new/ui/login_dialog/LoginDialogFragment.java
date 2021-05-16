@@ -48,51 +48,6 @@ public class LoginDialogFragment extends DialogFragment implements DialogInterfa
         Dialog loginDialog = dialog.create();
         //loginDialog.setCanceledOnTouchOutside(false);
 
-        sign_in.setOnClickListener(listener_in -> {
-
-            if(hasConnection(getActivity())) {
-
-                AuthUtils.signIn(
-                        entered_login.getText().toString(),
-                        entered_password.getText().toString(),
-                        (loginUser -> {
-                            int prevScore = userDao.getUserScore();
-                            loginUser.setScore(prevScore);
-                            AuthUtils.deleteUser(userDao);
-                            User checkUser = userDao.getByLogin(loginUser.getLogin());
-                            if(checkUser != null){
-                                AuthUtils.updateUser(loginUser, userDao);
-                            }
-                            else{
-                                AuthUtils.addUser(loginUser, userDao);
-                            }
-                        }));
-
-                LoginUserName = entered_login.getText().toString();
-                loginDialog.cancel();
-            }
-            else
-                Toast.makeText(getActivity(),
-                        "No internet connection!",
-                        Toast.LENGTH_SHORT).show();
-        });
-
-        sign_up.setOnClickListener(listener_up -> {
-
-            if(hasConnection(getActivity())) {
-
-                AuthUtils.signUp(
-                        entered_login.getText().toString(),
-                        entered_password.getText().toString(),
-                        (response) ->
-                                Toast.makeText(getActivity(), response, Toast.LENGTH_SHORT).show());
-            }
-            else
-                Toast.makeText(getActivity(),
-                        "No internet connection!",
-                        Toast.LENGTH_SHORT).show();
-        });
-
         entered_login.setError("Required field! (> 3 symbols!)");
         entered_login.addTextChangedListener(new TextWatcher() {
 
@@ -127,6 +82,58 @@ public class LoginDialogFragment extends DialogFragment implements DialogInterfa
                     entered_password.setError("Required!");
                 }
             }
+        });
+
+        sign_in.setOnClickListener(listener_in -> {
+
+            if(hasConnection(getActivity())) {
+
+                AuthUtils.signIn(
+                        entered_login.getText().toString(),
+                        entered_password.getText().toString(),
+                        (loginUser -> {
+                            int prevScore = userDao.getUserScore();
+                            loginUser.setScore(prevScore);
+                            AuthUtils.deleteUser(userDao);
+                            User checkUser = userDao.getByLogin(loginUser.getLogin());
+                            if(loginUser.getLogin().equals("error")){
+                                Toast.makeText(getActivity(), "Wrong login or password", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                if(checkUser != null){
+                                    AuthUtils.updateUser(loginUser, userDao);
+                                }
+                                else{
+                                    AuthUtils.addUser(loginUser, userDao);
+                                }
+                                Toast.makeText(getActivity(), "Success sign in", Toast.LENGTH_SHORT).show();
+                                loginDialog.cancel();
+                            }
+                        }));
+
+                LoginUserName = entered_login.getText().toString();
+                //loginDialog.cancel();
+            }
+            else
+                Toast.makeText(getActivity(),
+                        "No internet connection!",
+                        Toast.LENGTH_SHORT).show();
+        });
+
+        sign_up.setOnClickListener(listener_up -> {
+
+            if(hasConnection(getActivity())) {
+
+                AuthUtils.signUp(
+                        entered_login.getText().toString(),
+                        entered_password.getText().toString(),
+                        (response) ->
+                                Toast.makeText(getActivity(), response, Toast.LENGTH_SHORT).show());
+            }
+            else
+                Toast.makeText(getActivity(),
+                        "No internet connection!",
+                        Toast.LENGTH_SHORT).show();
         });
 
         return loginDialog;
