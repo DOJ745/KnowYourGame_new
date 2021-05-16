@@ -21,6 +21,9 @@ public interface ServerService {
     @POST("/logout")
     Call<LogoutDto> logOut();
 
+    @POST("/db/update/user")
+    Call<UserDto> updateUser(@Query("login") String login, @Query("score") int score);
+
     @GET("/db/data")
     Call<DbDto> getData();
 

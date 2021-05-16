@@ -33,6 +33,25 @@ public class AuthUtils {
         void logout(String logoutResponse);
     }
 
+    public static void updateUserData(UserDao userDao){
+        User currentUser = userDao.getCurrentUser();
+        myService.updateUser(currentUser.getLogin(), currentUser.getScore()).enqueue(new Callback<UserDto>() {
+            @Override
+            public void onResponse(
+                    @NotNull Call<UserDto> call,
+                    @NotNull Response<UserDto> response) {
+                Log.d(TAG, "User update status: " + response.body());
+            }
+
+            @Override
+            public void onFailure(
+                    @NotNull Call<UserDto> call,
+                    @NotNull Throwable t) {
+                Log.e(TAG, "Error loading from API (Update User)");
+            }
+        });
+    }
+
     public static void logoutUser(LogoutCallBack logoutCallBack){
         myService.logOut().enqueue(new Callback<LogoutDto>() {
 

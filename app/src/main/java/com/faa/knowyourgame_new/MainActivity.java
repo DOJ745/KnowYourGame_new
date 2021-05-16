@@ -145,8 +145,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         AuthUtils.logoutUser((logoutResponse ->
-                Toast.makeText(this, logoutResponse, Toast.LENGTH_LONG).show()));
+                Log.d(TAG, logoutResponse)));
 
+        if(hasConnection(getApplicationContext())) {
+            AuthUtils.updateUserData(userDao);
+        }
 
         finishAffinity();
         super.onBackPressed();
@@ -156,6 +159,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "ON DESTROY");
+
+        if(hasConnection(getApplicationContext())) {
+            AuthUtils.updateUserData(userDao);
+        }
+
         db.close();
         AuthUtils.logoutUser((logoutResponse ->
                 Log.d(TAG, logoutResponse)));
