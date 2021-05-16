@@ -92,12 +92,10 @@ public class HomeFragment extends Fragment {
         };
         spinner.setOnItemSelectedListener(itemSelectedListener);
 
-        textUserScore.setText("Your current score - " +
-                String.valueOf(userDao.getUserScore(LoginUserName)));
-
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
+                textUserScore.setText(s);
             }
         });
 
@@ -106,15 +104,15 @@ public class HomeFragment extends Fragment {
 
     private static void loadLeagueImg(ImageView _leagueIcon){
 
-        if(userDao.getUserScore(LoginUserName) >= 0 && userDao.getUserScore(LoginUserName) <= 100) {
+        if(userDao.getUserScore() >= 0 && userDao.getUserScore() <= 100) {
             String leagueImgName = leagueDao.getLeagueImg("Bronze");
             _leagueIcon.setImageDrawable(Drawable.createFromPath(IMAGE_PATH + "/" + leagueImgName));
         }
-        if(userDao.getUserScore(LoginUserName) >= 101 && userDao.getUserScore(LoginUserName) <= 150){
+        if(userDao.getUserScore() >= 101 && userDao.getUserScore() <= 150){
             String leagueImgName = leagueDao.getLeagueImg("Silver");
             _leagueIcon.setImageDrawable(Drawable.createFromPath(IMAGE_PATH + "/" + leagueImgName));
         }
-        if(userDao.getUserScore(LoginUserName) >= 151){
+        if(userDao.getUserScore() >= 151){
             String leagueImgName = leagueDao.getLeagueImg("Gold");
             _leagueIcon.setImageDrawable(Drawable.createFromPath(IMAGE_PATH + "/" + leagueImgName));
         }

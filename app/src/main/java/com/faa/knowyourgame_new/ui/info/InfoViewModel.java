@@ -14,7 +14,9 @@ public class InfoViewModel extends ViewModel {
                 "0) Tap on home icon to open main page\n" +
                 "1) Choose difficulty\n" +
                 "2) Answer on questions\n" +
-                "3) Try to get higher rating!");
+                "3) Try to get higher rating!\n\n" +
+                "What about points?\n" +
+                "Easy, if you answer correct, you earn them, else, lose.");
     }
 
     public LiveData<String> getText() {

@@ -14,8 +14,8 @@ public interface UserDao {
     @Query("SELECT * FROM User WHERE login = :login")
     User getByLogin(String login);
 
-    @Query("SELECT score FROM User WHERE login = :login")
-    int getUserScore(String login);
+    @Query("SELECT score FROM User")
+    int getUserScore();
 
     @Query("SELECT * FROM user")
     User getCurrentUser();

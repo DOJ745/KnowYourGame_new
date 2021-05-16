@@ -14,7 +14,9 @@ import com.faa.knowyourgame_new.R;
 import com.faa.knowyourgame_new.ui.question_dialog.QuestionDialogFragment;
 
 import static com.faa.knowyourgame_new.ui.question_dialog.QuestionDialogFragment.AnswerResult;
+import static com.faa.knowyourgame_new.ui.question_dialog.QuestionDialogFragment.CurrentQuestion;
 import static com.faa.knowyourgame_new.ui.question_dialog.QuestionDialogFragment.PointsToScore;
+import static com.faa.knowyourgame_new.ui.question_dialog.QuestionDialogFragment.QuestionsCount;
 
 public class AnswerStatusDialogFragment extends DialogFragment implements DialogInterface.OnClickListener {
 
@@ -41,11 +43,19 @@ public class AnswerStatusDialogFragment extends DialogFragment implements Dialog
         else{
             answerStatus.setText("Wrong!\n You lost " + PointsToScore + " points");
         }
+
         nextQuestion.setOnClickListener(v -> {
             NEXT_QUESTION_DIALOG.show(this.getFragmentManager(), "NEXT_QUESTION_DIALOG");
         });
+        lastQuestion.setOnClickListener(v -> {
+            answerStatusDialog.dismiss();
+        });
 
-        //if()
+        if(CurrentQuestion == QuestionsCount - 1){
+            answerStatus.setText("Well done!\n You answered on all questions!");
+            nextQuestion.setVisibility(View.INVISIBLE);
+            lastQuestion.setVisibility(View.VISIBLE);
+        }
 
         return  answerStatusDialog;
     }

@@ -33,6 +33,7 @@ public class QuestionDialogFragment extends DialogFragment implements DialogInte
     public static int CurrentQuestion = 0;
     public static int AnswerResult = 0;
     public static int PointsToScore = 0;
+    public static int QuestionsCount = 0;
 
     private DialogFragment answerStatusDialogFragment = new AnswerStatusDialogFragment();
 
@@ -67,6 +68,8 @@ public class QuestionDialogFragment extends DialogFragment implements DialogInte
         questionImage.setImageDrawable(Drawable.createFromPath(IMAGE_PATH + "/" + QUESTIONS.get(CurrentQuestion).getImage()));
         questionText.setText(QUESTIONS.get(CurrentQuestion).getText());
 
+        QuestionsCount = QUESTIONS.size();
+
         answer_var_one.setText(ANSWERS.get(0).getText());
         answer_var_two.setText(ANSWERS.get(1).getText());
         answer_var_three.setText(ANSWERS.get(2).getText());
@@ -100,16 +103,12 @@ public class QuestionDialogFragment extends DialogFragment implements DialogInte
 
         answer_on_question.setOnClickListener(v -> {
             answerTimer.cancel();
-            CurrentQuestion++;
+
             userAnswerStatus(QUESTIONS, AnswerResult);
             questionDialog.dismiss();
 
-            answerStatusDialogFragment.show(this.getParentFragmentManager(), "ANSWER_STATUS_DIALOG");
+            answerStatusDialogFragment.show(this.getFragmentManager(), "ANSWER_STATUS_DIALOG");
         });
-
-
-        if(CurrentQuestion == QUESTIONS.size())
-            CurrentQuestion = 0;
 
         return questionDialog;
     }
@@ -117,7 +116,7 @@ public class QuestionDialogFragment extends DialogFragment implements DialogInte
     @Override
     public void onClick(DialogInterface dialog, int which) { }
 
-    private static void userAnswerStatus(List<Question> questions, int _answerStatus){
+    private static void userAnswerStatus(List<Question> questions, int _answerStatus) {
         User currentUser = userDao.getCurrentUser();
         double multiplier = difficultyDao.getMultiplierById(questions.get(CurrentQuestion).getDifficulty_id());
         int questionCost = questions.get(CurrentQuestion).getCost();
@@ -137,5 +136,10 @@ public class QuestionDialogFragment extends DialogFragment implements DialogInte
             currentUser.setScore(currentUser.getScore() + pointsToScore);
             userDao.update(currentUser);
         }
+
+        if(CurrentQuestion == QuestionsCount)
+            CurrentQuestion = 0;
+
+        CurrentQuestion++;
     }
 }
