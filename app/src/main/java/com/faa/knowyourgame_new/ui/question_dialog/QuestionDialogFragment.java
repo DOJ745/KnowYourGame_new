@@ -26,12 +26,12 @@ import static com.faa.knowyourgame_new.MainActivity.answerDao;
 import static com.faa.knowyourgame_new.MainActivity.difficultyDao;
 import static com.faa.knowyourgame_new.MainActivity.themeDao;
 import static com.faa.knowyourgame_new.MainActivity.userDao;
+import static com.faa.knowyourgame_new.ui.home.HomeFragment.AnswerTrueness;
 import static com.faa.knowyourgame_new.ui.home.HomeFragment.ChosenQuestions;
 
 public class QuestionDialogFragment extends DialogFragment implements DialogInterface.OnClickListener {
 
     public static int CurrentQuestion = 0;
-    public static int AnswerResult = 0;
     public static int PointsToScore = 0;
     public static int QuestionsCount = 0;
 
@@ -61,7 +61,7 @@ public class QuestionDialogFragment extends DialogFragment implements DialogInte
         List<Question> QUESTIONS = ChosenQuestions;
         List<Answer> ANSWERS;
 
-        themeText.setText(themeDao.getNameById(QUESTIONS.get(CurrentQuestion).getTheme_id()));
+        themeText.setText("Current theme - " + themeDao.getNameById(QUESTIONS.get(CurrentQuestion).getTheme_id()));
 
         ANSWERS = answerDao.getAnswersForQuestion(QUESTIONS.get(CurrentQuestion).get_id());
 
@@ -80,34 +80,34 @@ public class QuestionDialogFragment extends DialogFragment implements DialogInte
             }
             public void onFinish() {
                 timerCountdown.setText("Times up!");
-                userAnswerStatus(QUESTIONS, AnswerResult);
+                userAnswerStatus(QUESTIONS, AnswerTrueness);
                 questionDialog.dismiss();
             }
         }.start();
 
 
         answer_var_one.setOnClickListener(v -> {
-            AnswerResult = ANSWERS.get(0).getTrueness();
+            AnswerTrueness = ANSWERS.get(0).getTrueness();
             chosenAnswer.setText("Chosen 1 variant");
         });
 
         answer_var_two.setOnClickListener(v -> {
-            AnswerResult = ANSWERS.get(1).getTrueness();
+            AnswerTrueness = ANSWERS.get(1).getTrueness();
             chosenAnswer.setText("Chosen 2 variant");
         });
 
         answer_var_three.setOnClickListener(v -> {
-            AnswerResult = ANSWERS.get(2).getTrueness();
+            AnswerTrueness = ANSWERS.get(2).getTrueness();
             chosenAnswer.setText("Chosen 3 variant");
         });
 
         answer_on_question.setOnClickListener(v -> {
             answerTimer.cancel();
 
-            userAnswerStatus(QUESTIONS, AnswerResult);
+            userAnswerStatus(QUESTIONS, AnswerTrueness);
             questionDialog.dismiss();
 
-            answerStatusDialogFragment.show(this.getFragmentManager(), "ANSWER_STATUS_DIALOG");
+            answerStatusDialogFragment.show(this.getParentFragmentManager(), "ANSWER_STATUS_DIALOG");
         });
 
         return questionDialog;
@@ -117,6 +117,7 @@ public class QuestionDialogFragment extends DialogFragment implements DialogInte
     public void onClick(DialogInterface dialog, int which) { }
 
     private static void userAnswerStatus(List<Question> questions, int _answerStatus) {
+
         User currentUser = userDao.getCurrentUser();
         double multiplier = difficultyDao.getMultiplierById(questions.get(CurrentQuestion).getDifficulty_id());
         int questionCost = questions.get(CurrentQuestion).getCost();
@@ -136,9 +137,6 @@ public class QuestionDialogFragment extends DialogFragment implements DialogInte
             currentUser.setScore(currentUser.getScore() + pointsToScore);
             userDao.update(currentUser);
         }
-
-        if(CurrentQuestion == QuestionsCount)
-            CurrentQuestion = 0;
 
         CurrentQuestion++;
     }

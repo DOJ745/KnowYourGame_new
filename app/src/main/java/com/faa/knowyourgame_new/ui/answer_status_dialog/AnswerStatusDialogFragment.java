@@ -13,14 +13,17 @@ import androidx.fragment.app.DialogFragment;
 import com.faa.knowyourgame_new.R;
 import com.faa.knowyourgame_new.ui.question_dialog.QuestionDialogFragment;
 
-import static com.faa.knowyourgame_new.ui.question_dialog.QuestionDialogFragment.AnswerResult;
+import static com.faa.knowyourgame_new.MainActivity.userDao;
+import static com.faa.knowyourgame_new.ui.home.HomeFragment.AnswerTrueness;
+import static com.faa.knowyourgame_new.ui.home.HomeFragment.LeagueIcon;
+import static com.faa.knowyourgame_new.ui.home.HomeFragment.TextUserScore;
+import static com.faa.knowyourgame_new.ui.home.HomeFragment.loadLeagueImg;
 import static com.faa.knowyourgame_new.ui.question_dialog.QuestionDialogFragment.CurrentQuestion;
 import static com.faa.knowyourgame_new.ui.question_dialog.QuestionDialogFragment.PointsToScore;
 import static com.faa.knowyourgame_new.ui.question_dialog.QuestionDialogFragment.QuestionsCount;
 
 public class AnswerStatusDialogFragment extends DialogFragment implements DialogInterface.OnClickListener {
 
-    private static int UserAnswer = AnswerResult;
     private static DialogFragment NEXT_QUESTION_DIALOG = new QuestionDialogFragment();
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -37,26 +40,32 @@ public class AnswerStatusDialogFragment extends DialogFragment implements Dialog
 
         Dialog answerStatusDialog = dialog.create();
 
-        if(UserAnswer == 0){
+        if(AnswerTrueness == 0){
             answerStatus.setText("Correct!\n You earned " + PointsToScore + " points");
         }
-        else{
+        if(AnswerTrueness == 1){
             answerStatus.setText("Wrong!\n You lost " + PointsToScore + " points");
         }
 
         nextQuestion.setOnClickListener(v -> {
-            NEXT_QUESTION_DIALOG.show(this.getFragmentManager(), "NEXT_QUESTION_DIALOG");
+            NEXT_QUESTION_DIALOG.show(this.getParentFragmentManager(), "NEXT_QUESTION_DIALOG");
+            answerStatusDialog.dismiss();
         });
+
         lastQuestion.setOnClickListener(v -> {
             answerStatusDialog.dismiss();
         });
 
-        if(CurrentQuestion == QuestionsCount - 1){
-            answerStatus.setText("Well done!\n You answered on all questions!");
+        if(CurrentQuestion == QuestionsCount){
+            answerStatus.setText("Well done!\n You answered(or not) on all questions!");
             nextQuestion.setVisibility(View.INVISIBLE);
             lastQuestion.setVisibility(View.VISIBLE);
+
+            CurrentQuestion = 0;
         }
 
+        TextUserScore.setText("Your current score - " + userDao.getUserScore());
+        loadLeagueImg(LeagueIcon);
         return  answerStatusDialog;
     }
 

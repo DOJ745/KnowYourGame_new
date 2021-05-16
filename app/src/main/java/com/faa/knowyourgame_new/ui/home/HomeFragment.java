@@ -42,6 +42,9 @@ public class HomeFragment extends Fragment {
 
     private static int ChosenDif;
     public static List<Question> ChosenQuestions;
+    public static TextView TextUserScore;
+    public static ImageView LeagueIcon;
+    public static int AnswerTrueness = 1;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -50,14 +53,14 @@ public class HomeFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        TextView textUserScore = root.findViewById(R.id.text_home);
+        TextUserScore = root.findViewById(R.id.text_home);
         Spinner spinner = root.findViewById(R.id.difficulty_spinner);
         Button playButton = root.findViewById(R.id.btn_play);
 
         ImageView ratingIcon = root.findViewById(R.id.rating_icon);
-        ImageView leagueIcon = root.findViewById(R.id.league_icon);
+        LeagueIcon = root.findViewById(R.id.league_icon);
 
-        loadLeagueImg(leagueIcon);
+        loadLeagueImg(LeagueIcon);
 
         ratingIcon.setOnClickListener(listener ->
                 MainQuestionDialogFragment.show(this.getParentFragmentManager(), "TEST_DIALOG"));
@@ -84,7 +87,6 @@ public class HomeFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
                 ChosenDif = difficultyDao.getIdByName(item);
-
                 ChosenQuestions = questionDao.getQuestionsByDiffId(ChosenDif);
             }
             @Override
@@ -92,17 +94,19 @@ public class HomeFragment extends Fragment {
         };
         spinner.setOnItemSelectedListener(itemSelectedListener);
 
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        /*homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textUserScore.setText(s);
+                TextUserScore.setText(s);
             }
-        });
+        });*/
 
+        TextUserScore.setText("Your current score - " + userDao.getUserScore());
         return root;
     }
 
-    private static void loadLeagueImg(ImageView _leagueIcon){
+
+    public static void loadLeagueImg(ImageView _leagueIcon){
 
         if(userDao.getUserScore() >= 0 && userDao.getUserScore() <= 100) {
             String leagueImgName = leagueDao.getLeagueImg("Bronze");
