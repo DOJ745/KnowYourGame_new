@@ -23,6 +23,7 @@ import com.faa.knowyourgame_new.R;
 import com.faa.knowyourgame_new.entity.Difficulty;
 import com.faa.knowyourgame_new.entity.Question;
 import com.faa.knowyourgame_new.ui.question_dialog.QuestionDialogFragment;
+import com.faa.knowyourgame_new.ui.rating_dialog.RatingDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
     private DialogFragment MainQuestionDialogFragment = new QuestionDialogFragment();
+    private DialogFragment RatingDialogFragment = new RatingDialogFragment();
     private HomeViewModel homeViewModel;
 
     private static int ChosenDif;
@@ -63,7 +65,7 @@ public class HomeFragment extends Fragment {
         loadLeagueImg(LeagueIcon);
 
         ratingIcon.setOnClickListener(listener ->
-                MainQuestionDialogFragment.show(this.getParentFragmentManager(), "TEST_DIALOG"));
+                RatingDialogFragment.show(this.getParentFragmentManager(), "RATING_DIALOG"));
 
         playButton.setOnClickListener(listener ->
                 MainQuestionDialogFragment.show(this.getParentFragmentManager(), "QUESTION_DIALOG")

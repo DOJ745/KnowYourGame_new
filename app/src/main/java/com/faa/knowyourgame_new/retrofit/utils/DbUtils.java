@@ -12,7 +12,9 @@ import com.faa.knowyourgame_new.dto.DbDto;
 import com.faa.knowyourgame_new.dto.DifficultyDto;
 import com.faa.knowyourgame_new.dto.LeagueDto;
 import com.faa.knowyourgame_new.dto.QuestionDto;
+import com.faa.knowyourgame_new.dto.RatingDto;
 import com.faa.knowyourgame_new.dto.ThemeDto;
+import com.faa.knowyourgame_new.dto.UserDto;
 import com.faa.knowyourgame_new.entity.Answer;
 import com.faa.knowyourgame_new.entity.Difficulty;
 import com.faa.knowyourgame_new.entity.League;
@@ -39,6 +41,28 @@ public class DbUtils {
 
     public interface DbCallBack<T>{
         void dbData(DbDto getDataResponse);
+    }
+
+    public interface RatingCallback<T>{
+        void rating(RatingDto getRatingResponse);
+    }
+
+    public static void getRating(RatingCallback ratingCallback){
+       myService.getRating().enqueue(new Callback<RatingDto>() {
+           @Override
+           public void onResponse(
+                   @NotNull Call<RatingDto> call,
+                   @NotNull Response<RatingDto> response) {
+               ratingCallback.rating(response.body());
+           }
+
+           @Override
+           public void onFailure(
+                   @NotNull Call<RatingDto> call,
+                   @NotNull Throwable t) {
+               Log.e(TAG, "Error loading from API (Rating)");
+           }
+       });
     }
 
     public static void getData(DbCallBack dbCallBack){

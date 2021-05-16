@@ -2,8 +2,11 @@ package com.faa.knowyourgame_new.retrofit;
 
 import com.faa.knowyourgame_new.dto.DbDto;
 import com.faa.knowyourgame_new.dto.LogoutDto;
+import com.faa.knowyourgame_new.dto.RatingDto;
 import com.faa.knowyourgame_new.dto.RegisterDto;
 import com.faa.knowyourgame_new.dto.UserDto;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -26,6 +29,9 @@ public interface ServerService {
 
     @GET("/db/data")
     Call<DbDto> getData();
+
+    @GET("/db/rating")
+    Call<RatingDto> getRating();
 
     //@GET("/score")
 }
