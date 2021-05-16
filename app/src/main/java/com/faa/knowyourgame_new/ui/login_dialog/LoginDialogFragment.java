@@ -58,7 +58,7 @@ public class LoginDialogFragment extends DialogFragment implements DialogInterfa
                         (loginUser -> {
                             User checkUser = userDao.getByLogin(loginUser.getLogin());
                             if(checkUser != null){
-                                AuthUtils.deleteUser(loginUser, userDao);
+                                AuthUtils.updateUser(loginUser, userDao);
                             }
                             else{
                                 AuthUtils.addUser(loginUser, userDao);

@@ -2,12 +2,9 @@ package com.faa.knowyourgame_new.ui.question_dialog;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,23 +16,25 @@ import androidx.fragment.app.DialogFragment;
 import com.faa.knowyourgame_new.R;
 import com.faa.knowyourgame_new.entity.Answer;
 import com.faa.knowyourgame_new.entity.Question;
-import com.faa.knowyourgame_new.retrofit.utils.ApiUtils;
-import com.faa.knowyourgame_new.retrofit.utils.DownloadImageTask;
+import com.faa.knowyourgame_new.entity.User;
+import com.faa.knowyourgame_new.ui.answer_status_dialog.AnswerStatusDialogFragment;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import static com.faa.knowyourgame_new.MainActivity.IMAGE_PATH;
 import static com.faa.knowyourgame_new.MainActivity.answerDao;
+import static com.faa.knowyourgame_new.MainActivity.difficultyDao;
 import static com.faa.knowyourgame_new.MainActivity.themeDao;
+import static com.faa.knowyourgame_new.MainActivity.userDao;
 import static com.faa.knowyourgame_new.ui.home.HomeFragment.ChosenQuestions;
 
 public class QuestionDialogFragment extends DialogFragment implements DialogInterface.OnClickListener {
 
-    private static int answerResult = 0;
+    public static int CurrentQuestion = 0;
+    public static int AnswerResult = 0;
+    public static int PointsToScore = 0;
+
+    private DialogFragment answerStatusDialogFragment = new AnswerStatusDialogFragment();
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -61,12 +60,12 @@ public class QuestionDialogFragment extends DialogFragment implements DialogInte
         List<Question> QUESTIONS = ChosenQuestions;
         List<Answer> ANSWERS;
 
-        themeText.setText(themeDao.getNameById(QUESTIONS.get(0).getTheme_id()));
+        themeText.setText(themeDao.getNameById(QUESTIONS.get(CurrentQuestion).getTheme_id()));
 
-        ANSWERS = answerDao.getAnswersForQuestion(QUESTIONS.get(0).get_id());
+        ANSWERS = answerDao.getAnswersForQuestion(QUESTIONS.get(CurrentQuestion).get_id());
 
-        questionImage.setImageDrawable(Drawable.createFromPath(IMAGE_PATH + "/" + QUESTIONS.get(0).getImage()));
-        questionText.setText(QUESTIONS.get(0).getText());
+        questionImage.setImageDrawable(Drawable.createFromPath(IMAGE_PATH + "/" + QUESTIONS.get(CurrentQuestion).getImage()));
+        questionText.setText(QUESTIONS.get(CurrentQuestion).getText());
 
         answer_var_one.setText(ANSWERS.get(0).getText());
         answer_var_two.setText(ANSWERS.get(1).getText());
@@ -78,34 +77,39 @@ public class QuestionDialogFragment extends DialogFragment implements DialogInte
             }
             public void onFinish() {
                 timerCountdown.setText("Times up!");
-                //wrongUserAnswer();
+                userAnswerStatus(QUESTIONS, AnswerResult);
                 questionDialog.dismiss();
             }
         }.start();
 
 
         answer_var_one.setOnClickListener(v -> {
-            answerResult = ANSWERS.get(0).getTrueness();
+            AnswerResult = ANSWERS.get(0).getTrueness();
             chosenAnswer.setText("Chosen 1 variant");
         });
 
         answer_var_two.setOnClickListener(v -> {
-            answerResult = ANSWERS.get(1).getTrueness();
+            AnswerResult = ANSWERS.get(1).getTrueness();
             chosenAnswer.setText("Chosen 2 variant");
         });
 
         answer_var_three.setOnClickListener(v -> {
-            answerResult = ANSWERS.get(2).getTrueness();
+            AnswerResult = ANSWERS.get(2).getTrueness();
             chosenAnswer.setText("Chosen 3 variant");
         });
 
         answer_on_question.setOnClickListener(v -> {
+            answerTimer.cancel();
+            CurrentQuestion++;
+            userAnswerStatus(QUESTIONS, AnswerResult);
+            questionDialog.dismiss();
 
-            if(answerResult == 0) {
-                answerTimer.cancel();
-                questionDialog.dismiss();
-            }
+            answerStatusDialogFragment.show(this.getParentFragmentManager(), "ANSWER_STATUS_DIALOG");
         });
+
+
+        if(CurrentQuestion == QUESTIONS.size())
+            CurrentQuestion = 0;
 
         return questionDialog;
     }
@@ -113,25 +117,25 @@ public class QuestionDialogFragment extends DialogFragment implements DialogInte
     @Override
     public void onClick(DialogInterface dialog, int which) { }
 
-    private Bitmap pickImageForView(File storagePath, String imgName) {
+    private static void userAnswerStatus(List<Question> questions, int _answerStatus){
+        User currentUser = userDao.getCurrentUser();
+        double multiplier = difficultyDao.getMultiplierById(questions.get(CurrentQuestion).getDifficulty_id());
+        int questionCost = questions.get(CurrentQuestion).getCost();
 
-        Bitmap foundImage = null;
-        boolean success = false;
-        try {
+        int pointsToScore = (int) (questionCost * multiplier);
+        PointsToScore = pointsToScore;
 
-            String imagePath = storagePath.getPath() + "/" + imgName;
-            InputStream ims = getClass().getResourceAsStream(imagePath);
-
-
-            foundImage = BitmapFactory.decodeStream(ims);
-
-            if(foundImage != null)
-                success = true;
+        if(currentUser.getScore() < 0){
+            currentUser.setScore(0);
+            userDao.update(currentUser);
         }
-        catch (Exception e) { e.printStackTrace(); }
-
-        if (success) { Log.e("LoginDialogFragment", "Image found!"); }
-        else {  Log.e("LoginDialogFragment", "Image NOT found!"); }
-        return foundImage;
+        if(_answerStatus == 1){
+            currentUser.setScore(currentUser.getScore() - pointsToScore);
+            userDao.update(currentUser);
+        }
+        if(_answerStatus == 0){
+            currentUser.setScore(currentUser.getScore() + pointsToScore);
+            userDao.update(currentUser);
+        }
     }
 }

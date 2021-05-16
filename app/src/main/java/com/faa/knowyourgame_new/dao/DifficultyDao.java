@@ -22,8 +22,11 @@ public interface DifficultyDao {
     @Query("SELECT * FROM Difficulty")
     List<Difficulty> getAll();
 
-    @Query("SELECT _id FROM DIFFICULTY where name = :name")
+    @Query("SELECT _id FROM Difficulty where name = :name")
     int getIdByName(String name);
+
+    @Query("SELECT multiplier FROM Difficulty where _id = :id")
+    double getMultiplierById(long id);
 
     @Insert
     void insert(Difficulty difficulty);

@@ -2,7 +2,6 @@ package com.faa.knowyourgame_new.ui.home;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +22,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.faa.knowyourgame_new.R;
 import com.faa.knowyourgame_new.entity.Difficulty;
 import com.faa.knowyourgame_new.entity.Question;
-import com.faa.knowyourgame_new.retrofit.utils.ApiUtils;
-import com.faa.knowyourgame_new.retrofit.utils.DownloadImageTask;
 import com.faa.knowyourgame_new.ui.question_dialog.QuestionDialogFragment;
 
 import java.util.ArrayList;
@@ -40,7 +37,7 @@ import static com.faa.knowyourgame_new.ui.login_dialog.LoginDialogFragment.Login
 public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
-    private DialogFragment questionDialogFragment = new QuestionDialogFragment();
+    private DialogFragment MainQuestionDialogFragment = new QuestionDialogFragment();
     private HomeViewModel homeViewModel;
 
     private static int ChosenDif;
@@ -63,10 +60,10 @@ public class HomeFragment extends Fragment {
         loadLeagueImg(leagueIcon);
 
         ratingIcon.setOnClickListener(listener ->
-                questionDialogFragment.show(this.getParentFragmentManager(), "TEST_DIALOG"));
+                MainQuestionDialogFragment.show(this.getParentFragmentManager(), "TEST_DIALOG"));
 
         playButton.setOnClickListener(listener ->
-                questionDialogFragment.show(this.getParentFragmentManager(), "QUESTION_DIALOG")
+                MainQuestionDialogFragment.show(this.getParentFragmentManager(), "QUESTION_DIALOG")
         );
 
         List<Difficulty> difficultyList = difficultyDao.getAll();

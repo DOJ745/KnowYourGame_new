@@ -17,6 +17,9 @@ public interface UserDao {
     @Query("SELECT score FROM User WHERE login = :login")
     int getUserScore(String login);
 
+    @Query("SELECT * FROM user")
+    User getCurrentUser();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(User user);
 
