@@ -138,10 +138,7 @@ public class AuthUtils {
         userDao.update(loginUser);
     }
 
-    public static void deleteUser(UserDto userDto, UserDao userDao){
-        ModelMapper modelMapper = new ModelMapper();
-
-        User loginUser = modelMapper.map(userDto, User.class);
-        userDao.insert(loginUser);
+    public static void deleteUser(UserDao userDao){
+        userDao.deleteTempData();
     }
 }

@@ -17,8 +17,11 @@ public interface UserDao {
     @Query("SELECT score FROM User")
     int getUserScore();
 
-    @Query("SELECT * FROM user")
+    @Query("SELECT * FROM User")
     User getCurrentUser();
+
+    @Query("DELETE FROM User")
+    void deleteTempData();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(User user);
