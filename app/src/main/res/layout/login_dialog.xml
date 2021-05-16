@@ -46,7 +46,7 @@
 
         android:hint="@string/prompt_password"
         android:importantForAutofill="no"
-        android:inputType="textVisiblePassword"
+        android:inputType="textPassword"
         android:textSize="30sp"
 
         app:layout_constraintStart_toStartOf="parent"

@@ -56,6 +56,8 @@ public class LoginDialogFragment extends DialogFragment implements DialogInterfa
                         entered_login.getText().toString(),
                         entered_password.getText().toString(),
                         (loginUser -> {
+                            int prevScore = userDao.getUserScore();
+                            loginUser.setScore(prevScore);
                             AuthUtils.deleteUser(userDao);
                             User checkUser = userDao.getByLogin(loginUser.getLogin());
                             if(checkUser != null){

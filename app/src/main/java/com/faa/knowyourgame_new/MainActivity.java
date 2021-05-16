@@ -6,9 +6,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.faa.knowyourgame_new.dao.AnswerDao;
 import com.faa.knowyourgame_new.dao.DifficultyDao;
@@ -57,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
     public static SharedPreferences.Editor configEditor;
 
     public static File IMAGE_PATH;
-
-    //private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,8 +136,6 @@ public class MainActivity extends AppCompatActivity {
             configEditor.putInt("FIRST_LAUNCH", firstLaunch);
             configEditor.apply();
         }
-
-        //new DownloadImageTask(imageView).execute(ApiUtils.BASE_SERVER_URL + "images/cat.jpg");
     }
 
 
