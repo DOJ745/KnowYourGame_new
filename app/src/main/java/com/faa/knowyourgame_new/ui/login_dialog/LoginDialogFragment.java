@@ -97,7 +97,7 @@ public class LoginDialogFragment extends DialogFragment implements DialogInterfa
                             AuthUtils.deleteUser(userDao);
                             User checkUser = userDao.getByLogin(loginUser.getLogin());
                             if(loginUser.getLogin().equals("error")){
-                                Toast.makeText(getActivity(), "Wrong login or password", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Wrong login or password", Toast.LENGTH_LONG).show();
                             }
                             else{
                                 if(checkUser != null){
@@ -106,7 +106,7 @@ public class LoginDialogFragment extends DialogFragment implements DialogInterfa
                                 else{
                                     AuthUtils.addUser(loginUser, userDao);
                                 }
-                                Toast.makeText(getActivity(), "Success sign in", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Success sign in", Toast.LENGTH_LONG).show();
                                 loginDialog.cancel();
                             }
                         }));

@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">KnowYourGame_new</string>
+    <string name="app_name">Know Your Game</string>
     <string name="title_home">Home</string>
     <string name="title_logout">Logout</string>
     <string name="title_dashboard">Dashboard</string>
